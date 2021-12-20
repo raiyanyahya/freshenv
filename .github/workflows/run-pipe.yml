@@ -1,0 +1,58 @@
+
+name: run-pipe
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+            python-version: 3.7
+
+      - name: build
+        run: python3 setup.py install
+  Test:
+      needs: [Build]
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: setup python
+          uses: actions/setup-python@v2
+          with:
+            python-version: 3.7
+        - name: test
+          run: |
+            pip3 install tox
+            tox -r
+
+  deploy:
+    needs: [Test]
+    runs-on: ubuntu-latest
+    if: |
+        contains(github.event.head_commit.message, '[release]') == true &&
+        github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install setuptools wheel twine
+      - name: Build and publish
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          python3 setup.py sdist bdist_wheel
+          twine upload dist/*
