@@ -1,0 +1,34 @@
+
+name: Build Test
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+            python-version: 3.7
+
+      - name: build
+        run: python3 setup.py install
+  Test:
+      needs: [Build]
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: setup python
+          uses: actions/setup-python@v2
+          with:
+            python-version: 3.7
+        - name: test
+          run: |
+            pip3 install tox
+            tox -r

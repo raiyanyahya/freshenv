@@ -1,40 +1,13 @@
-
-name: Build Test Release
+name: Package Release
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
-  Build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2 
-      - name: setup python
-        uses: actions/setup-python@v2
-        with:
-            python-version: 3.7
-
-      - name: build
-        run: python3 setup.py install
-  Test:
-      needs: [Build]
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - name: setup python
-          uses: actions/setup-python@v2
-          with:
-            python-version: 3.7
-        - name: test
-          run: |
-            pip3 install tox
-            tox -r
-
-  Release:
-    needs: [Test]
+  deploy:
     runs-on: ubuntu-latest
     if: |
         contains(github.event.head_commit.message, '[release]') == true &&

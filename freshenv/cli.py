@@ -1,6 +1,6 @@
 import click
 
-from freshenv import provision
+from freshenv import provision, view, start
 
 
 @click.group()
@@ -12,3 +12,5 @@ def cli() -> None:
 
 
 cli.add_command(provision.provision)
+cli.add_command(view.view)
+cli.add_command(start.start)
