@@ -39,7 +39,7 @@ def get_version():
 setup(
     name="freshenv",
     python_requires=">3.6",
-    options={'bdist_wheel':{'universal':'1'}},
+    options={"bdist_wheel": {"universal": "1"}},
     version=get_version(),
     description="A cli to provision and manage local developer environments.",
     long_description="A cli to provision and manage local developer environments.",
@@ -48,7 +48,7 @@ setup(
     author_email="raiyanyahyadeveloper@gmail.com",
     keywords="cli",
     packages=find_packages(),
-    install_requires=["click", "docker","dockerpty", "pytest"],
+    install_requires=["click", "docker", "dockerpty", "pytest"],
     extras_require={"test": ["coverage", "pytest", "pytest-cov"]},
     entry_points={"console_scripts": ["freshenv=freshenv.cli:cli"]},
     tests_require=["mock >= 2.0.0"],
