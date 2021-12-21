@@ -38,6 +38,8 @@ def get_version():
 
 setup(
     name="freshenv",
+    python_requires=">3.6",
+    options={'bdist_wheel':{'universal':'1'}},
     version=get_version(),
     description="A cli to provision and manage local developer environments.",
     long_description="A cli to provision and manage local developer environments.",
