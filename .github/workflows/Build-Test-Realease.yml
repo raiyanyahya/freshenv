@@ -1,5 +1,5 @@
 
-name: run-pipe
+name: Build Test Release
 on:
   push:
     branches: [ main ]
@@ -33,7 +33,7 @@ jobs:
             pip3 install tox
             tox -r
 
-  deploy:
+  Release:
     needs: [Test]
     runs-on: ubuntu-latest
     if: |
