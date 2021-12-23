@@ -12,7 +12,7 @@ client = APIClient(base_url="unix://var/run/docker.sock")
 
 def create_environment(flavour: str, command: str, ports: List[int], name: str) -> Dict:
     if name == "index":
-        name = count_environents() + 1
+        name = str(count_environents() + 1)
     container = client.create_container(
         name=f"freshenv_{name}",
         image=f"ghcr.io/raiyanyahya/{flavour}/{flavour}",

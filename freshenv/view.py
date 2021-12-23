@@ -2,8 +2,7 @@ from typing import Dict, List
 import click
 from docker import APIClient
 from freshenv.console import console
-from rich.table import Table
-from rich import box
+from rich import print
 
 client = APIClient(base_url="unix://var/run/docker.sock")
 
@@ -30,16 +29,16 @@ def get_list_environments() -> List[Dict]:
 def view() -> None:
     """View local freshenv managed environments."""
     container_list = get_list_environments()
-    table = Table(title="LOCAL FRESHENV ENVIRONMENTS", leading=1, box=box.ROUNDED)
-    table.add_column("FLAVOUR", justify="center", style="blue")
-    table.add_column("NAME", justify="center", style="magenta")
-    table.add_column("STATUS", justify="center", style="cyan")
-    table.add_column("STATE", justify="center", style="green")
+    if not container_list:
+        print(":computer: No freshenv environments found.")
     for container in container_list:
-        table.add_row(
-            container.get("Image").split("/")[-1],
-            container.get("Names")[0],
-            container.get("Status"),
-            container.get("State"),
+        if "Exited" in container.get("Status"):  # type: ignore
+            img = ":arrow_down_small: "
+        else:
+            img = ":arrow_up_small: "
+        print(
+            img,
+            "Name: [bold blue]" + container.get("Names")[0] + "[/bold blue]",  # type: ignore
+            "| Flavour: [bold blue]" + container.get("Image").split("/")[-1] + "[/bold blue]",  # type: ignore
+            "| State: [bold blue]" + container.get("Status") + "[/bold blue]",  # type: ignore
         )
-    console.print(table)
