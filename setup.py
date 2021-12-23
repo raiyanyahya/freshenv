@@ -48,7 +48,7 @@ setup(
     author_email="raiyanyahyadeveloper@gmail.com",
     keywords="cli",
     packages=find_packages(),
-    install_requires=["click", "docker", "dockerpty", "pytest"],
+    install_requires=["click", "docker", "rich", "dockerpty", "pytest"],
     extras_require={"test": ["coverage", "pytest", "pytest-cov"]},
     entry_points={"console_scripts": ["freshenv=freshenv.cli:cli"]},
     tests_require=["mock >= 2.0.0"],

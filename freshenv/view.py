@@ -1,7 +1,9 @@
-from typing import Dict, List
+from typing import Dict, List, ValuesView
 import click
 from docker import APIClient
-
+from freshenv.console import console
+from rich.table import Table
+from rich import box
 
 client = APIClient(base_url="unix://var/run/docker.sock")
 
@@ -11,6 +13,7 @@ def count_environents() -> int:
 
 
 def get_list_environments() -> List[Dict]:
+    environment_list = []
     try:
         environment_list = client.containers(
             all=True,
@@ -25,14 +28,18 @@ def get_list_environments() -> List[Dict]:
 
 @click.command("view")
 def view() -> None:
-    """
-    view local freshenv managed environments.
-    """
+    """View local freshenv managed environments."""
     container_list = get_list_environments()
-    view_list = []
+    table = Table(title="LOCAL FRESHENV ENVIRONMENTS", leading=1, box=box.ROUNDED)
+    table.add_column("FLAVOUR", justify="center", style="blue")
+    table.add_column("NAME", justify="center", style="magenta")
+    table.add_column("STATUS", justify="center", style="cyan")
+    table.add_column("STATE", justify="center", style="green")
     for container in container_list:
-        environment = {}
-        environment["Environment Name"] = container.get("Names")[0]
-        environment["State"] = container.get("State")
-        view_list.append(environment)
-    print(view_list)
+        table.add_row(
+            container.get("Image").split("/")[-1],
+            container.get("Names")[0],
+            container.get("Status"),
+            container.get("State"),
+        )
+    console.print(table)
