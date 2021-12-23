@@ -1,4 +1,4 @@
-from typing import Dict, List, ValuesView
+from typing import Dict, List
 import click
 from docker import APIClient
 from freshenv.console import console

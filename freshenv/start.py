@@ -13,7 +13,7 @@ client = APIClient(base_url="unix://var/run/docker.sock")
     help="Name of your environment to resume.",
 )
 def start(name: str) -> None:
-    """Resume working in an environment"""
+    """Resume working in an environment."""
     containers = client.containers(all=True, filters={"name": name})
     if containers:
         dockerpty.start(client, containers[0])

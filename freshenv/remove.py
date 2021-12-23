@@ -1,4 +1,3 @@
-from signal import SIGKILL
 import click
 from docker import APIClient, errors
 from rich import print
@@ -14,9 +13,8 @@ client = APIClient(base_url="unix://var/run/docker.sock")
 )
 def remove(name: str) -> None:
     """Remove a freshenv environment."""
-
     try:
-        containers = client.remove_container(container=name)
+        client.remove_container(container=name)
     except errors.NotFound:
         print(
             f":ghost: No freshenv environment called [underline  bold]{name}[/underline bold] found."

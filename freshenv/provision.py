@@ -57,7 +57,6 @@ def pull_and_try_again(flavour, command, ports, name):
 )
 def provision(flavour: str, command: str, ports: List[int], name: str) -> None:
     """Provision a developer environment."""
-
     try:
         container = create_environment(flavour, command, ports, name)
         dockerpty.start(client, container)
