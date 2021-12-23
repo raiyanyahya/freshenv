@@ -1,7 +1,6 @@
 from typing import Dict, List
 import click
 from docker import APIClient
-from freshenv.console import console
 from rich import print
 
 client = APIClient(base_url="unix://var/run/docker.sock")

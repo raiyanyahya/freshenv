@@ -1,5 +1,10 @@
 name: Package Release
 on:
+  workflow_run:
+    workflows: ["Build Test"]
+    branches: [master]
+    types: 
+      - completed
   pull_request:
     branches: [ master ]
   workflow_dispatch:
@@ -9,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     if: |
         contains(github.event.head_commit.message, '[release]') == true &&
-        github.event_name == 'push'
+        github.event_name == 'push' &&
+        ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
       - name: setup python

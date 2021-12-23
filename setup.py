@@ -43,7 +43,7 @@ setup(
     version=get_version(),
     description="A cli to provision and manage local developer environments.",
     long_description="A cli to provision and manage local developer environments.",
-    url="https://gitlab.com/raiyanyahya/freshenv",
+    url="https://github.com/raiyanyahya/freshenv",
     author="Raiyan Yahya",
     author_email="raiyanyahyadeveloper@gmail.com",
     keywords="cli",
