@@ -13,12 +13,7 @@ def count_environents() -> int:
 def get_list_environments() -> List[Dict]:
     environment_list = []
     try:
-        environment_list = client.containers(
-            all=True,
-            filters={
-                "label": "maintainer=Raiyan Yahya <raiyanyahyadeveloper@gmail.com>"
-            },
-        )
+        environment_list = client.containers(all=True,filters={"label": "maintainer=Raiyan Yahya <raiyanyahyadeveloper@gmail.com>"})
     except Exception as error:
         print("Unknown exception: {}".format(error))
     return environment_list
