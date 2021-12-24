@@ -1,5 +1,9 @@
 name: Package Release
 on:
+  workflow_run:
+    workflows: ["Build Test"]
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
