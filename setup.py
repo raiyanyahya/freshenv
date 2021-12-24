@@ -39,7 +39,7 @@ setup(
     author_email="raiyanyahyadeveloper@gmail.com",
     keywords=["cli","developer-tools","productivity"],
     packages=find_packages(),
-    install_requires=["click==7.1.2", "docker==4.3.1", "rich==10.16.1", "dockerpty==0.4.1"],
+    install_requires=["click==7.1.2", "docker==5.0.3", "rich==10.16.1", "dockerpty==0.4.1"],
     entry_points={"console_scripts": ["freshenv=freshenv.cli:cli"]},
     tests_require=["mock >= 2.0.0"],
 )
