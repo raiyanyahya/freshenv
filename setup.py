@@ -1,15 +1,16 @@
-from os.path import abspath, dirname, join
+from os.path import abspath, dirname, join, isfile
+from os import environ
 from setuptools import find_packages, setup
-
-version_file = ".version"
+import sys
+version_f = ".version"
 this_dir = abspath(dirname(__file__))
 with open(join(this_dir, "README.md"), encoding="utf-8") as file:
     long_description = file.read()
 
 
 def get_version():
-    if os.path.isfile(version_file):
-        with open(version_file) as version_file:
+    if isfile(version_f):
+        with open(version_f) as version_file:
             version = version_file.read().strip()
             return version
     elif (
@@ -18,10 +19,10 @@ def get_version():
         or "sdist" in sys.argv
         or "bdist_wheel" in sys.argv
     ):
-        version = os.environ.get("VERSION", "0.0")  # Avoid PEP 440 warning
+        version = environ.get("VERSION", "0.0")  # Avoid PEP 440 warning
         if "-SNAPSHOT" in version:
             version = version.replace("-SNAPSHOT", ".0")
-        with open(version_file, "w+") as version_file:
+        with open(version_f, "w+") as version_file:
             version_file.write(version)
         return version
 
