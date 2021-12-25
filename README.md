@@ -19,15 +19,15 @@ I imagine it would help developers like me, its ```free and open source```. I ho
 
 ## Installation
 
-Install the freshenv python package from pypi. You must have python3.6 or above.
+Install the freshenv python package from pypi. You must have ```docker``` and ```python3.6+```  installed.
 
-```bash
+```console
   pip install freshenv
 ```
     
 ## Usage
 
-```bash
+```console
 Usage: freshenv [OPTIONS] COMMAND [ARGS]...
 
   A cli to provision and manage local developer environments.
@@ -46,7 +46,7 @@ Commands:
 ### Commands and Options
 
 **```provision```**
-```bash
+```console
 Usage: freshenv provision [OPTIONS]
 
   Provision a developer environment.
@@ -61,7 +61,7 @@ Options:
 
 
 **```start```**
-```bash
+```console
 Usage: freshenv start [OPTIONS]
 
   Resume working in an environment.
@@ -72,7 +72,7 @@ Options:
 ```
 
 **```remove```**
-```bash
+```console
 Usage: freshenv remove [OPTIONS]
 
   Remove a freshenv environment.
@@ -84,7 +84,7 @@ Options:
 ```
 
 **```view```**
-```bash
+```console
 Usage: freshenv view [OPTIONS]
 
   View local freshenv managed environments.
@@ -104,6 +104,6 @@ Contributions are always welcome!
 See `contributing.md` for ways to get started. Please adhere to this project's `code of conduct`.
 
 
-## Support
+## Contact
 
-For support, email raiyanyahyadeveloper@gmail.com.
+Contact me at email raiyanyahyadeveloper@gmail.com.
