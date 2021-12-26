@@ -33,7 +33,8 @@ setup(
     options={"bdist_wheel": {"universal": "1"}},
     version=get_version(),
     description="A cli to provision and manage local developer environments.",
-    long_description="A cli to provision and manage local developer environments.",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     url="https://github.com/raiyanyahya/freshenv",
     author="Raiyan Yahya",
     author_email="raiyanyahyadeveloper@gmail.com",
@@ -41,5 +42,4 @@ setup(
     packages=find_packages(),
     install_requires=["click==8.0.3", "docker==5.0.3", "rich==10.16.1", "dockerpty==0.4.1"],
     entry_points={"console_scripts": ["freshenv=freshenv.cli:cli"]},
-    tests_require=["mock >= 2.0.0"],
 )
