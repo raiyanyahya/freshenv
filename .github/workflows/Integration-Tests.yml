@@ -3,24 +3,25 @@ on:
   workflow_dispatch:
 
 jobs:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: setup python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          pip3 install setuptools wheel twine
-          pip3 install .
-      - name: run freshenv
-        run: freshenv --help
-      - name: provision busybox
-        run: freshenv provision -f freshenv-busybox -c ls -p '["3001","3002"]'
-      - name: view freshenv
-        run: freshenv view
+    integrations-tests:
+      strategy:
+        matrix:
+          os: [ubuntu-latest, macos-latest]
+      runs-on: ${{ matrix.os }}
+      steps:
+        - uses: actions/checkout@v2
+        - name: setup python
+          uses: actions/setup-python@v2
+          with:
+            python-version: 3.8
+        - name: Install dependencies
+          run: |
+            python3 -m pip install --upgrade pip
+            pip3 install setuptools wheel twine
+            pip3 install .
+        - name: run freshenv
+          run: freshenv --help
+        - name: provision busybox
+          run: freshenv provision -f freshenv-busybox -c ls -p '["3001","3002"]'
+        - name: view freshenv
+          run: freshenv view
