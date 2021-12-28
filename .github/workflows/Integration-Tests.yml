@@ -16,8 +16,10 @@ jobs:
             python-version: 3.8
         - name: Install dependencies
           run: |
-            brew install docker
-            open -a docker
+            brew install docker docker-machine
+            brew cask install virtualbox
+            docker-machine create default
+            eval "$(docker-machine env default)"
             python3 -m pip install --upgrade pip
             pip3 install setuptools wheel twine
             pip3 install .
