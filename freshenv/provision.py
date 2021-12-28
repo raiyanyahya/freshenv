@@ -2,6 +2,7 @@ from typing import Dict, List
 import click
 from docker import APIClient, errors
 import dockerpty
+from freshenv.util import PythonLiteralOption
 from freshenv.view import count_environents
 from rich import print
 from requests import exceptions
@@ -12,17 +13,17 @@ client = APIClient(base_url="unix://var/run/docker.sock")
 dir = getcwd()
 folder = path.basename(dir)
 
-def create_environment(flavour: str, command: str, ports: List[int], name: str) -> Dict:
+def create_environment(flavour: str, command: str, ports: List[str], name: str) -> Dict:
     if name == "index":
         name = str(count_environents() + 1)
-    
+    print(ports)
     container = client.create_container(
         name=f"freshenv_{name}",
         image=f"ghcr.io/raiyanyahya/{flavour}/{flavour}",
         stdin_open=True,
         tty=True,
         command=command,
-        ports=ports,
+        ports=list(ports),
         volumes=["/home/devuser"],
         host_config=client.create_host_config(binds=[
         f"{dir}:/home/devuser/{folder}:delegated",
@@ -40,16 +41,17 @@ def pull_and_try_again(flavour, command, ports, name):
             client.pull(f"ghcr.io/raiyanyahya/{flavour}/{flavour}")
         container = create_environment(flavour, command, ports, name)
         dockerpty.start(client, container)
-    except (errors.ImageNotFound, exceptions.HTTPError):
+    except (errors.ImageNotFound, exceptions.HTTPError) as e:
+        print(e)
         print(":x: flavour doesnt exist")
 
 
 @click.command("provision")
-@click.option("--flavour","-f",default="devenv",help="The flavour of the environment.",show_default=True)
-@click.option("--command","-c",default="zsh",help="The command to execute at startup of environment.",show_default=True)
-@click.option("--ports","-p", default=[3000], help="List of ports to forward.", show_default=True)
+@click.option("--flavour","-f",default="devenv", help="The flavour of the environment.",show_default=True)
+@click.option("--command","-c",default="zsh", help="The command to execute at startup of environment.",show_default=True)
+@click.option("--ports","-p", default=["3000","4000"], cls=PythonLiteralOption, help="List of ports to forward.", show_default=True)
 @click.option("--name","-n", default="index", help="Name of your environment.", show_default=False)
-def provision(flavour: str, command: str, ports: List[int], name: str) -> None:
+def provision(flavour: str, command: str, ports: List[str], name: str) -> None:
     """Provision a developer environment."""
     try:
         container = create_environment(flavour, command, ports, name)
