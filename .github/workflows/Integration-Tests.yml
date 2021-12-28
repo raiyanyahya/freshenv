@@ -19,7 +19,8 @@ jobs:
             python3 -m pip install --upgrade pip
             pip3 install setuptools wheel twine
             pip3 install .
-        - name: docker ps
+        - name: check if docker is running
+          run: docker ps
         - name: run freshenv
           run: freshenv --help
         - name: provision busybox
