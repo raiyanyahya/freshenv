@@ -14,19 +14,14 @@ jobs:
           uses: actions/setup-python@v2
           with:
             python-version: 3.8
-        - name: Install dependencies
-          run: |
-            brew install hyperkit
-            brew install minikube
-            brew install docker
-            brew install docker-compose
-            minikube start
-            eval $(minikube docker-env)
-            echo "`minikube ip` docker.local" | sudo tee -a /etc/hosts > /dev/null
-            docker run hello-world
-            python3 -m pip install --upgrade pip
-            pip3 install setuptools wheel twine
-            pip3 install .
+        - uses: docker-practice/actions-setup-docker@master
+        - run: |
+               set -x
+               docker version
+               docker run --rm hello-world
+               python3 -m pip install --upgrade pip
+               pip3 install setuptools wheel twine
+               pip3 install .
         - name: run freshenv
           run: freshenv --help
         - name: provision busybox
