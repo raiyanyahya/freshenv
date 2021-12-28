@@ -16,11 +16,14 @@ jobs:
             python-version: 3.8
         - name: Install dependencies
           run: |
-            brew install docker docker-machine
-            brew install --cask virtualbox@5.0.12
-            docker-machine create default
-            brew services restart docker-machine
-            eval "$(docker-machine env default)"
+            brew install hyperkit
+            brew install minikube
+            brew install docker
+            brew install docker-compose
+            minikube start
+            eval $(minikube docker-env)
+            echo "`minikube ip` docker.local" | sudo tee -a /etc/hosts > /dev/null
+            docker run hello-world
             python3 -m pip install --upgrade pip
             pip3 install setuptools wheel twine
             pip3 install .
