@@ -16,6 +16,9 @@ jobs:
           python3 -m pip install --upgrade pip
           pip3 install setuptools wheel twine
           pip3 install .
-      - name: Run Freshenv
-        run: |
-          freshenv view
+      - name: run freshenv
+        run: freshenv --help
+      - name: provision busybox
+        run: freshenv provision -f freshenv-busybox -c ls
+      - name: view freshenv
+        run: freshenv view
