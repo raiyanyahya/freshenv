@@ -12,6 +12,16 @@ from os import getcwd, path
 client = APIClient(base_url="unix://var/run/docker.sock")
 dir = getcwd()
 folder = path.basename(dir)
+local_mount_binds = [
+        f"{dir}:/home/devuser/{folder}:delegated",
+        "/home/$USER/.gitconfig:/root/.gitconfig:ro",
+        "/home/$USER/.ssh:/root/.ssh:ro",
+        "/var/run/docker.sock:/var/run/docker.sock"
+    ]
+test_mount_binds = [
+        f"{dir}:/home/devuser/{folder}:delegated",
+        "/var/run/docker.sock:/var/run/docker.sock"
+    ]
 
 def create_environment(flavour: str, command: str, ports: List[str], name: str) -> Dict:
     if name == "index":
@@ -24,13 +34,7 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str) 
         command=command,
         ports=ports,
         volumes=["/home/devuser"],
-        host_config=client.create_host_config(binds=[
-        f"{dir}:/home/devuser/{folder}:delegated",
-        "/home/$USER/.gitconfig:/root/.gitconfig:ro",
-        "/home/$USER/.ssh:/root/.ssh:ro",
-        "/var/run/docker.sock:/var/run/docker.sock"
-    ])
-    )
+        host_config=client.create_host_config(binds=test_mount_binds if environ.getattr('GITHUB_ACTIONS') else local_mount_binds))
     return container
 
 
