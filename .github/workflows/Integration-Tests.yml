@@ -16,9 +16,7 @@ jobs:
             python-version: 3.8
         - name: Install dependencies
           run: |
-            brew install docker docker-compose docker-machine xhyve docker-machine-driver-xhyve
-            docker-machine create default --driver xhyve --xhyve-experimental-nfs-share
-            eval $(docker-machine env default)
+            brew cask install docker
             python3 -m pip install --upgrade pip
             pip3 install setuptools wheel twine
             pip3 install .
