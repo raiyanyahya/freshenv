@@ -19,6 +19,6 @@ jobs:
       - name: run freshenv
         run: freshenv --help
       - name: provision busybox
-        run: freshenv provision -f freshenv-busybox -c ls
+        run: freshenv provision -f freshenv-busybox -c ls -p '["3001","3002"]'
       - name: view freshenv
         run: freshenv view

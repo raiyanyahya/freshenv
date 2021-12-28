@@ -16,14 +16,13 @@ folder = path.basename(dir)
 def create_environment(flavour: str, command: str, ports: List[str], name: str) -> Dict:
     if name == "index":
         name = str(count_environents() + 1)
-    print(ports)
     container = client.create_container(
         name=f"freshenv_{name}",
         image=f"ghcr.io/raiyanyahya/{flavour}/{flavour}",
         stdin_open=True,
         tty=True,
         command=command,
-        ports=list(ports),
+        ports=ports,
         volumes=["/home/devuser"],
         host_config=client.create_host_config(binds=[
         f"{dir}:/home/devuser/{folder}:delegated",
@@ -42,14 +41,13 @@ def pull_and_try_again(flavour, command, ports, name):
         container = create_environment(flavour, command, ports, name)
         dockerpty.start(client, container)
     except (errors.ImageNotFound, exceptions.HTTPError) as e:
-        print(e)
         print(":x: flavour doesnt exist")
 
 
 @click.command("provision")
 @click.option("--flavour","-f",default="devenv", help="The flavour of the environment.",show_default=True)
 @click.option("--command","-c",default="zsh", help="The command to execute at startup of environment.",show_default=True)
-@click.option("--ports","-p", default=["3000","4000"], cls=PythonLiteralOption, help="List of ports to forward.", show_default=True)
+@click.option("--ports","-p", default='["3000","4000"]', cls=PythonLiteralOption, help="String list of ports to forward.", show_default=True)
 @click.option("--name","-n", default="index", help="Name of your environment.", show_default=False)
 def provision(flavour: str, command: str, ports: List[str], name: str) -> None:
     """Provision a developer environment."""
