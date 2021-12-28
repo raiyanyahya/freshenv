@@ -7,7 +7,7 @@ from freshenv.view import count_environents
 from rich import print
 from requests import exceptions
 from freshenv.console import console
-from os import getcwd, path
+from os import getcwd, path, environ
 
 client = APIClient(base_url="unix://var/run/docker.sock")
 dir = getcwd()
@@ -34,7 +34,7 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str) 
         command=command,
         ports=ports,
         volumes=["/home/devuser"],
-        host_config=client.create_host_config(binds=test_mount_binds if environ.getattr('GITHUB_ACTIONS') else local_mount_binds))
+        host_config=client.create_host_config(binds=test_mount_binds if environ.get('GITHUB_ACTIONS') else local_mount_binds))
     return container
 
 
