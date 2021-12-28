@@ -18,7 +18,6 @@ jobs:
         - run: |
                set -x
                docker version
-               docker run --rm hello-world
                python3 -m pip install --upgrade pip
                pip3 install setuptools wheel twine
                pip3 install .

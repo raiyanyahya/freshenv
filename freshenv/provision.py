@@ -41,6 +41,7 @@ def pull_and_try_again(flavour, command, ports, name):
         container = create_environment(flavour, command, ports, name)
         dockerpty.start(client, container)
     except (errors.ImageNotFound, exceptions.HTTPError) as e:
+        print(e)
         print(":x: flavour doesnt exist")
 
 
