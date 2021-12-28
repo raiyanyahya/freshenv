@@ -17,7 +17,7 @@ jobs:
         - name: Install dependencies
           run: |
             brew install docker docker-machine
-            brew install --cask virtualbox
+            brew install --cask virtualbox@5.0.12
             docker-machine create default
             brew services restart docker-machine
             eval "$(docker-machine env default)"
