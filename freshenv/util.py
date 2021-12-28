@@ -6,5 +6,5 @@ class PythonLiteralOption(Option):
     def type_cast_value(self, ctx, value):
         try:
             return literal_eval(value)
-        except:
+        except BadParameter:
             raise BadParameter(value)
