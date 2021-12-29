@@ -37,6 +37,7 @@ Options:
   --help     Show this message and exit.
 
 Commands:
+  check      Check system compatibility for running freshenv.
   provision  Provision a developer environment.
   remove     Remove a freshenv environment.
   start      Resume working in an environment.
@@ -88,6 +89,16 @@ Options:
 Usage: freshenv view [OPTIONS]
 
   View local freshenv managed environments.
+
+Options:
+  --help  Show this message and exit.
+```
+
+**```check```**
+```console
+Usage: freshenv check [OPTIONS]
+
+  Check system compatibility for running freshenv.
 
 Options:
   --help  Show this message and exit.

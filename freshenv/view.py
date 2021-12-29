@@ -27,9 +27,9 @@ def view() -> None:
         print(":computer: No freshenv environments found.")
     for container in container_list:
         if "Exited" in container.get("Status"):  # type: ignore
-            img = ":arrow_down_small: "
+            img = ":arrow_down: "
         else:
-            img = ":arrow_up_small: "
+            img = ":arrow_forward: "
         print(
             img,
             "Name: [bold blue]" + container.get("Names")[0] + "[/bold blue]",  # type: ignore
