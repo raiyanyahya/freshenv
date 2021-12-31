@@ -3,7 +3,7 @@ import click
 from docker import APIClient
 from rich import print
 
-client = None
+client: APIClient = None
 
 
 def count_environents() -> int:

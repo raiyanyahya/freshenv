@@ -9,7 +9,7 @@ from requests import exceptions
 from freshenv.console import console
 from os import getcwd, path, environ
 
-client = None
+client: APIClient = None
 dir = getcwd()
 folder = path.basename(dir)
 local_mount_binds = [
