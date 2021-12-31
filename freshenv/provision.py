@@ -9,7 +9,7 @@ from requests import exceptions
 from freshenv.console import console
 from os import getcwd, path, environ
 
-client = APIClient(base_url="unix://var/run/docker.sock")
+client = None
 dir = getcwd()
 folder = path.basename(dir)
 local_mount_binds = [
@@ -57,6 +57,7 @@ def pull_and_try_again(flavour, command, ports, name):
 def provision(flavour: str, command: str, ports: List[str], name: str) -> None:
     """Provision a developer environment."""
     try:
+        client = APIClient(base_url="unix://var/run/docker.sock")
         container = create_environment(flavour, command, ports, name)
         dockerpty.start(client, container)
     except (exceptions.HTTPError, errors.NotFound):

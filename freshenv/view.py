@@ -3,7 +3,7 @@ import click
 from docker import APIClient
 from rich import print
 
-client = APIClient(base_url="unix://var/run/docker.sock")
+client = None
 
 
 def count_environents() -> int:
@@ -22,6 +22,7 @@ def get_list_environments() -> List[Dict]:
 @click.command("view")
 def view() -> None:
     """View local freshenv managed environments."""
+    client = APIClient(base_url="unix://var/run/docker.sock")
     container_list = get_list_environments()
     if not container_list:
         print(":computer: No freshenv environments found.")

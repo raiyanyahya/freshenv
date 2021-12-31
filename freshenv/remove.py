@@ -2,7 +2,7 @@ import click
 from docker import APIClient, errors
 from rich import print
 
-client = APIClient(base_url="unix://var/run/docker.sock")
+
 
 
 @click.command("remove")
@@ -11,6 +11,7 @@ client = APIClient(base_url="unix://var/run/docker.sock")
 def remove(name: str, force: bool) -> None:
     """Remove a freshenv environment."""
     try:
+        client = APIClient(base_url="unix://var/run/docker.sock")
         client.remove_container(container=name, force=force)
         print(f":boom: {name} environment removed.")
     except errors.NotFound:

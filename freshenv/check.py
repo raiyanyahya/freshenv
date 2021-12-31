@@ -8,11 +8,11 @@ from rich import print
 @click.command("check")
 def check() -> None:
     """Check system compatibility for running freshenv."""
-    client = check_docker()
+    check_docker()
 
 def check_docker():
     try:
-        client = APIClient(base_url="unix://var/run/docker.sock")
+        APIClient(base_url="unix://var/run/docker.sock")
         print(":white_heavy_check_mark: Docker installed and running. ")
     except Exception:
         print(":cross_mark_button: Docker not installed or running. ")
