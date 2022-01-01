@@ -61,7 +61,7 @@ def provision(flavour: str, command: str, ports: List[str], name: str) -> None:
         dockerpty.start(client, container)
     except (exceptions.HTTPError, errors.NotFound):
         pull_and_try_again(flavour, command, ports, name,client)
-    except errors.DockerException as e:
+    except errors.DockerException:
         print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
         print("Unknown exception: {}".format(e))

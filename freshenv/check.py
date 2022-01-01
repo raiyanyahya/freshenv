@@ -40,9 +40,9 @@ def run_test_environment(client: APIClient):
         container = create_environment(flavour="freshenv-busybox", command="ls", ports=["3000","4000"], name="system_test", client=client)
         dockerpty.start(client, container,open(os.devnull, "w"))
         print(":heavy_check_mark: Succesfully provisioned test environment.")
-    except Exception as e:
+    except Exception:
         print(":cross_mark_button: Could not provision test environment.")
-        exit()
+        exit(1)
 
 @click.command("check")
 def check() -> None:
