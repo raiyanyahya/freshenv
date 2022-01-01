@@ -23,14 +23,14 @@ test_mount_binds = [
         "/var/run/docker.sock:/var/run/docker.sock"
     ]
 
-def create_environment(flavour: str, command: str, ports: List[str], name: str) -> Dict:
+def create_environment(flavour: str, command: str, ports: List[str], name: str, client: APIClient, tty: bool=True, stdin_open: bool=True) -> Dict:
     if name == "index":
         name = str(count_environents() + 1)
     container = client.create_container(
         name=f"freshenv_{name}",
         image=f"ghcr.io/raiyanyahya/{flavour}/{flavour}",
-        stdin_open=True,
-        tty=True,
+        stdin_open=stdin_open,
+        tty=tty,
         command=command,
         ports=ports,
         volumes=["/home/devuser"],
@@ -38,14 +38,13 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str) 
     return container
 
 
-def pull_and_try_again(flavour, command, ports, name):
+def pull_and_try_again(flavour: str, command: str, ports: List[str], name: str, client: APIClient):
     try:
         with console.status("Flavour doesnt exist locally. Fetching flavour...", spinner="arrow2"):
             client.pull(f"ghcr.io/raiyanyahya/{flavour}/{flavour}")
-        container = create_environment(flavour, command, ports, name)
+        container = create_environment(flavour, command, ports, name, client)
         dockerpty.start(client, container)
     except (errors.ImageNotFound, exceptions.HTTPError) as e:
-        print(e)
         print(":x: flavour doesnt exist")
 
 
@@ -58,9 +57,7 @@ def provision(flavour: str, command: str, ports: List[str], name: str) -> None:
     """Provision a developer environment."""
     try:
         client = APIClient(base_url="unix://var/run/docker.sock")
-        container = create_environment(flavour, command, ports, name)
-        dockerpty.start(client, container)
-    except (exceptions.HTTPError, errors.NotFound):
-        pull_and_try_again(flavour, command, ports, name)
+    except errors.DockerException as e:
+        print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
         print("Unknown exception: {}".format(e))

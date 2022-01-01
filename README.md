@@ -63,23 +63,21 @@ Options:
 
 **```start```**
 ```console
-Usage: freshenv start [OPTIONS]
+Usage: freshenv start [OPTIONS] NAME
 
   Resume working in an environment.
 
 Options:
-  -n, --name TEXT  Name of your environment to resume.  [required]
-  --help           Show this message and exit.
+  --help  Show this message and exit.
 ```
 
 **```remove```**
 ```console
-Usage: freshenv remove [OPTIONS]
+Usage: freshenv remove [OPTIONS] NAME
 
   Remove a freshenv environment.
 
 Options:
-  -n, --name TEXT  Name of the environment to remove.  [required]
   -f, --force      Force remove an environment.
   --help           Show this message and exit.
 ```

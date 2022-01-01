@@ -22,8 +22,4 @@ jobs:
                pip3 install setuptools wheel twine
                pip3 install .
         - name: run freshenv
-          run: freshenv --help
-        - name: provision busybox
-          run: freshenv provision -f freshenv-busybox -c ls -p '["3001","3002"]'
-        - name: view freshenv
-          run: freshenv view
+          run: freshenv check
