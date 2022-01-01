@@ -36,7 +36,7 @@ def view() -> None:
                 "| Flavour: [bold blue]" + container.get("Image").split("/")[-1] + "[/bold blue]",  # type: ignore
                 "| State: [bold blue]" + container.get("Status") + "[/bold blue]",  # type: ignore
             )
-    except errors.DockerException as e:
+    except errors.DockerException:
         print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
         print("Unknown exception: {}".format(e))

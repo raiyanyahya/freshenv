@@ -17,7 +17,7 @@ def start(name: str) -> None:
             dockerpty.start(client, containers[0])
         else:
             print(f":ghost: No freshenv environment called [bold]{name}[/bold] found.")
-    except errors.DockerException as e:
+    except errors.DockerException:
         print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
         print("Unknown exception: {}".format(e))

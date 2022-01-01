@@ -1,8 +1,7 @@
 import click
 from docker import APIClient, errors
 from rich import print
-from freshenv.provision import create_environment, provision
-from freshenv.console import console
+from freshenv.provision import create_environment
 import dockerpty
 from requests import exceptions
 import os

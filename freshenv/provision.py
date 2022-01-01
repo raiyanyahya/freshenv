@@ -44,7 +44,7 @@ def pull_and_try_again(flavour: str, command: str, ports: List[str], name: str, 
             client.pull(f"ghcr.io/raiyanyahya/{flavour}/{flavour}")
         container = create_environment(flavour, command, ports, name, client)
         dockerpty.start(client, container)
-    except (errors.ImageNotFound, exceptions.HTTPError) as e:
+    except (errors.ImageNotFound, exceptions.HTTPError):
         print(":x: flavour doesnt exist")
 
 
@@ -57,6 +57,10 @@ def provision(flavour: str, command: str, ports: List[str], name: str) -> None:
     """Provision a developer environment."""
     try:
         client = APIClient(base_url="unix://var/run/docker.sock")
+        container = create_environment(flavour, command, ports, name, client)
+        dockerpty.start(client, container)
+    except (exceptions.HTTPError, errors.NotFound):
+        pull_and_try_again(flavour, command, ports, name,client)
     except errors.DockerException as e:
         print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:

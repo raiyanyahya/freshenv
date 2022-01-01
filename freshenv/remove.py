@@ -16,7 +16,7 @@ def remove(name: str, force: bool) -> None:
         print(f":boom: {name} environment removed.")
     except errors.NotFound:
         print(f":ghost: No freshenv environment called [bold]{name}[/bold] found.")
-    except errors.DockerException as e:
+    except errors.DockerException:
         print(":cross_mark_button: Docker not installed or running. ")
     except errors.APIError as e:
         if e.status_code == 409:
