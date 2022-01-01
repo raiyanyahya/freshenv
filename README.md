@@ -19,7 +19,7 @@ I imagine it would help developers like me, its ```free and open source```. I ho
 
 ## Installation
 
-Install the freshenv python package from pypi. You must have ```docker``` and ```python3.6+```  installed.
+Install the freshenv python package from pypi. You must have ```docker``` and ```python3.7+```  installed.
 
 ```console
   pip install freshenv
