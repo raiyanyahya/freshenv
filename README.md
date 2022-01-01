@@ -8,9 +8,9 @@
 ## Why?
 
 This is a solution to a problem I have always had. I like my system to be clean, minimal and structured. 
-It gets quite tricky to manage multiple projects on your on machine, projects tend to gather and are placed everywhere. 
-Overtime managing system wide dependencies becomes a problem. It quite easy to mess up a system setting or to 
-keep track of a package you wont need tomorrow. This is why i built ```freshenv```. It is a command line application
+It gets quite tricky to manage multiple projects on my on machine, projects tend to gather and are placed everywhere. 
+Overtime managing system wide dependencies becomes a problem. It is quite easy to mess up a system setting or to 
+keep track of a package I wont need tomorrow. This is why I built ```freshenv```. It is a command line application
  which helps developers in running and managing completely isolated developer environments locally. 
 It fetches and lets you run environment flavours in the form of docker containers
 which are preconfigured with tools and packages developer needs everyday. Read about the usage below. 
@@ -117,4 +117,4 @@ See `contributing.md` for ways to get started. Please adhere to this project's `
 
 ## Contact
 
-Contact me at email raiyanyahyadeveloper@gmail.com.
+Contact me through email at raiyanyahyadeveloper@gmail.com.
