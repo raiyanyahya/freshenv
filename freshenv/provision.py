@@ -22,7 +22,7 @@ test_mount_binds = [
         f"{dir}:/home/devuser/{folder}:delegated",
         "/var/run/docker.sock:/var/run/docker.sock"
     ]
-
+google_dns = "8.8.8.8"
 def create_environment(flavour: str, command: str, ports: List[str], name: str, client: APIClient, tty: bool=True, stdin_open: bool=True) -> Dict:
     if name == "index":
         name = str(count_environents() + 1)
@@ -34,7 +34,7 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str, 
         command=command,
         ports=ports,
         volumes=["/home/devuser"],
-        host_config=client.create_host_config(dns=["8.8.8.8"],binds=test_mount_binds if environ.get('GITHUB_ACTIONS') else local_mount_binds))
+        host_config=client.create_host_config(dns=google_dns,binds=test_mount_binds if environ.get('GITHUB_ACTIONS') else local_mount_binds))
     return container
 
 
