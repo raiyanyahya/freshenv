@@ -22,7 +22,7 @@ test_mount_binds = [
         f"{dir}:/home/devuser/{folder}:delegated",
         "/var/run/docker.sock:/var/run/docker.sock"
     ]
-google_dns = "8.8.8.8"
+google_dns = ["8.8.8.8"]
 def create_environment(flavour: str, command: str, ports: List[str], name: str, client: APIClient, tty: bool=True, stdin_open: bool=True) -> Dict:
     if name == "index":
         name = str(count_environents() + 1)
