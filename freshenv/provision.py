@@ -34,7 +34,7 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str, 
         command=command,
         ports=ports,
         volumes=["/home/devuser"],
-        host_config=client.create_host_config(binds=test_mount_binds if environ.get('GITHUB_ACTIONS') else local_mount_binds))
+        host_config=client.create_host_config(dns=["8.8.8.8"],binds=test_mount_binds if environ.get('GITHUB_ACTIONS') else local_mount_binds))
     return container
 
 
