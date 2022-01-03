@@ -26,7 +26,7 @@ def remove_old_tests(client: APIClient):
     except errors.APIError as e:
         if e.status_code == 404:
              print(":heavy_check_mark: No test images found. Moving on...")
-    except Exception as e:
+    except Exception:
         print(":cross_mark_button: Could not remove freshenv test image. A freshenv test environment maybe still running.")
         exit(1)
 
