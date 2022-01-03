@@ -17,13 +17,28 @@ which are preconfigured with tools and packages developer needs everyday. Read a
 I imagine it would help developers like me, its ```free and open source```. I hope you like it.
 
 
-## Installation
+## Installation Linux
 
 Install the freshenv python package from pypi. You must have ```docker``` and ```python3.7+```  installed.
 
 ```console
   pip install freshenv
 ```
+
+I would recoomend using pipx instead of pip to install cli applications on you machine.
+
+## Installation MacOS
+
+Install the freshenv python package from a self hosted homebrew tap. You must have ```docker``` and ```python3.7+```  installed.
+
+```console
+  brew tap raiyanyahya/freshenv
+  brew install freshenv
+```
+
+I am trying to get freshenv on homebrew-core but I need more stars on the repository for 
+them to accept my pull request. The self hosted tap is available
+on the repo raiyanyahya/homebrew-freshenv.
     
 ## Usage
 
