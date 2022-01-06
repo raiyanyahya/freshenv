@@ -3,7 +3,7 @@
 
 
 # Freshenv 
-```freshenv``` is a  command line application to provision and manage local developer environments.
+```freshenv``` is a  command line application to provision and manage local developer environments. Build and develop your projects in a completely isolated environment. Save, switch and restart your environments. 
 
 ## The Story
 
@@ -14,7 +14,7 @@ keep track of a package I wont need tomorrow. This is why I built ```freshenv```
  which helps developers in running and managing completely isolated developer environments locally. 
 It fetches and lets you run environment flavours in the form of docker containers
 which are preconfigured with tools and packages developer needs everyday. Read about the usage below. 
-I imagine it would help developers like me, its ```free and open source```. I hope you like it.
+I imagine it would help developers like me. I hope you like it.
 
 
 ## Installation Linux
