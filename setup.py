@@ -41,5 +41,5 @@ setup(
     keywords=["cli","developer-tools","productivity"],
     packages=find_packages(),
     install_requires=["click==8.0.3", "docker==5.0.3", "rich==10.16.2", "dockerpty==0.4.1"],
-    entry_points={"console_scripts": ["freshenv=freshenv.cli:cli"]},
+    entry_points={"console_scripts": ["freshenv=freshenv.cli:cli","fr=freshenv.cli:cli"]},
 )
