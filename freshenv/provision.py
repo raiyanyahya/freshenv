@@ -15,12 +15,10 @@ folder = path.basename(dir)
 local_mount_binds = [
         f"{dir}:/home/devuser/{folder}:delegated",
         "/home/$USER/.gitconfig:/root/.gitconfig:ro",
-        "/home/$USER/.ssh:/root/.ssh:ro",
-        "/var/run/docker.sock:/var/run/docker.sock"
+        "/home/$USER/.ssh:/root/.ssh:ro"
     ]
 test_mount_binds = [
-        f"{dir}:/home/devuser/{folder}:delegated",
-        "/var/run/docker.sock:/var/run/docker.sock"
+        f"{dir}:/home/devuser/{folder}:delegated"
     ]
 google_dns = ["8.8.8.8"]
 def create_environment(flavour: str, command: str, ports: List[str], name: str, client: APIClient, tty: bool=True, stdin_open: bool=True) -> Dict:
@@ -34,7 +32,8 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str, 
         command=command,
         ports=ports,
         volumes=["/home/devuser"],
-        host_config=client.create_host_config(dns=google_dns,binds=test_mount_binds if environ.get('GITHUB_ACTIONS') else local_mount_binds))
+        use_config_proxy=False,
+        host_config=client.create_host_config(userns_mode="host",privileged=True,dns=google_dns,binds=test_mount_binds if environ.get('GITHUB_ACTIONS') else local_mount_binds))
     return container
 
 
