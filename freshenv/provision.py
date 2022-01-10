@@ -13,13 +13,9 @@ client: APIClient = None
 dir = getcwd()
 folder = path.basename(dir)
 local_mount_binds = [
-        f"{dir}:/home/devuser/{folder}:delegated",
-        "/home/$USER/.gitconfig:/root/.gitconfig:ro",
-        "/home/$USER/.ssh:/root/.ssh:ro"
-    ]
-test_mount_binds = [
         f"{dir}:/home/devuser/{folder}:delegated"
     ]
+
 google_dns = ["8.8.8.8"]
 def create_environment(flavour: str, command: str, ports: List[str], name: str, client: APIClient, tty: bool=True, stdin_open: bool=True) -> Dict:
     if name == "index":
@@ -33,7 +29,7 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str, 
         ports=ports,
         volumes=["/home/devuser"],
         use_config_proxy=False,
-        host_config=client.create_host_config(userns_mode="host",privileged=True,dns=google_dns,binds=test_mount_binds if environ.get('GITHUB_ACTIONS') else local_mount_binds))
+        host_config=client.create_host_config(userns_mode="host",privileged=True,dns=google_dns,binds=local_mount_binds))
     return container
 
 
@@ -48,7 +44,7 @@ def pull_and_try_again(flavour: str, command: str, ports: List[str], name: str, 
 
 
 @click.command("provision")
-@click.option("--flavour","-f",default="devenv", help="The flavour of the environment.",show_default=True)
+@click.option("--flavour","-f",default="base", help="The flavour of the environment.",show_default=True)
 @click.option("--command","-c",default="zsh", help="The command to execute at startup of environment.",show_default=True)
 @click.option("--ports","-p", default='["3000","4000"]', cls=PythonLiteralOption, help="String list of ports to forward.", show_default=True)
 @click.option("--name","-n", default="index", help="Name of your environment.", show_default=False)
