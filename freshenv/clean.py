@@ -24,7 +24,7 @@ def clean(force: bool) -> None:
         print(":cross_mark_button: Docker not installed or running. ")
     except errors.APIError as e:
         if e.status_code == 409:
-            print(f":runner: Found a [bold green]running[/bold green] environment. Close the session first or use the [bold blue]--force[/bold blue] flag.")
+            print(":runner: Found a [bold green]running[/bold green] environment. Close the session first or use the [bold blue]--force[/bold blue] flag.")
         else:
             raise Exception(e)
     except Exception as e:
