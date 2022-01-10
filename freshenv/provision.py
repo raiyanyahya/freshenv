@@ -12,11 +12,16 @@ from os import getcwd, path, environ
 client: APIClient = None
 dir = getcwd()
 folder = path.basename(dir)
-local_mount_binds = [
-        f"{dir}:/home/devuser/{folder}:delegated"
-    ]
-
+local_mount_binds = [f"{dir}:/home/devuser/{folder}:delegated"]
 google_dns = ["8.8.8.8"]
+
+def get_port_bindings(ports: List[str]) -> Dict:
+    port_bindings = {}
+    for port in ports:
+        port_bindings[port] = port
+    return port_bindings
+
+
 def create_environment(flavour: str, command: str, ports: List[str], name: str, client: APIClient, tty: bool=True, stdin_open: bool=True) -> Dict:
     if name == "index":
         name = str(count_environents() + 1)
@@ -26,10 +31,10 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str, 
         stdin_open=stdin_open,
         tty=tty,
         command=command,
-        ports=ports,
         volumes=["/home/devuser"],
+        ports=ports,
         use_config_proxy=False,
-        host_config=client.create_host_config(userns_mode="host",privileged=True,dns=google_dns,binds=local_mount_binds))
+        host_config=client.create_host_config(port_bindings=get_port_bindings(ports),userns_mode="host",privileged=True,dns=google_dns,binds=local_mount_binds))
     return container
 
 
