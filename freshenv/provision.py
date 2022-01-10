@@ -7,7 +7,7 @@ from freshenv.view import count_environents
 from rich import print
 from requests import exceptions
 from freshenv.console import console
-from os import getcwd, path, environ
+from os import getcwd, path
 
 client: APIClient = None
 dir = getcwd()
