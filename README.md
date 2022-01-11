@@ -3,7 +3,7 @@
 
 
 # Freshenv 
-```freshenv``` is a  command line application to provision and manage local developer environments. Build and develop your projects in completely isolated environments. Save, switch and restart your environments. 
+```freshenv``` is a  command line application to provision and manage local developer environments. Build and develop your projects in completely isolated environments. Save, switch and restart your environments. Choose from a wide variety of flavours to get the developer tools you need.
 
 [![index240c4c1ee1218010.gif](https://s10.gifyu.com/images/index240c4c1ee1218010.gif)](https://gifyu.com/image/SbpoN)
 
