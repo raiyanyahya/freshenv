@@ -3,10 +3,11 @@
 
 
 # Freshenv 
-```freshenv``` is a  command line application to provision and manage local developer environments. Build and develop your projects in completely isolated environments. Save, switch and restart your environments. Choose from a wide variety of flavours to get the developer tools you need.
-
+```freshenv``` is a  command line application to provision and manage local developer environments. Build and develop your projects in completely isolated environments. Save, switch and restart your environments. Choose from a wide variety of flavours to get the developer tools you need.\
+\
+<kbd>
 [![download-17adc07640182f121.gif](https://s10.gifyu.com/images/download-17adc07640182f121.gif)](https://gifyu.com/image/Sbsim)
-
+</kbd>
 ## The Story
 
 This is a solution to a problem I have always had. I like my system to be clean, minimal and structured. 
