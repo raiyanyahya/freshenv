@@ -18,6 +18,9 @@ It fetches and lets you run environment flavours in the form of docker container
 which are preconfigured with tools and packages developer needs everyday. Read about the usage below. 
 I imagine it would help developers like me. I hope you like it.
 
+## Flavours
+
+```freshenv flavours``` are different configurations for freshenv environments. You choose a flavour and provision it as an environment. A flavour can be a combination of operating systems, language packs, tools and application bundles. By default freshenv provisions you with a ```base``` flavour which runs ubuntu 18.04 and has packages like ```wget git python3-pip curl zsh wget nano zsh``` and more. The base flavour is a 260mb environment when provisioned. There are bigger flavours like ```devenv``` which runs on the latest ubuntu and has been loaded and configured with ```docker (run docker inside your freshenv environment), golang, python, node, java, a vscode server, build-essential automake make cmake sudo g++ wget git python3-pip curl zsh wget nano nodejs npm fonts-powerline``` and more. This environment is around 1.6gb large. Freshenv also gives you the option to provision a language based environment which contains necessary developer tools for that language. Checkout the usage section below on the flavours command to see a list of flavours available.
 
 ## Installation Linux
 
