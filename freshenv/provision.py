@@ -10,9 +10,9 @@ from freshenv.console import console
 from os import getcwd, path
 
 client: APIClient = None
-dir = getcwd()
-folder = path.basename(dir)
-local_mount_binds = [f"{dir}:/home/devuser/{folder}:delegated"]
+current_directory = getcwd()
+folder = path.basename(current_directory)
+local_mount_binds = [f"{current_directory}:/home/devuser/{folder}:delegated"]
 google_dns = ["8.8.8.8"]
 
 def get_port_bindings(ports: List[str]) -> Dict:
