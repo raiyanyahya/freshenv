@@ -1,5 +1,5 @@
 import click
-from freshenv import provision, view, start, remove, check, clean
+from freshenv import provision, view, start, remove, check, clean, flavours
 
 
 @click.group()
@@ -14,3 +14,4 @@ cli.add_command(start.start)
 cli.add_command(remove.remove)
 cli.add_command(check.check)
 cli.add_command(clean.clean)
+cli.add_command(flavours.flavours)
