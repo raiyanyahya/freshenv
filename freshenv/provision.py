@@ -40,7 +40,7 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str, 
 
 def pull_and_try_again(flavour: str, command: str, ports: List[str], name: str, client: APIClient):
     try:
-        with console.status("Flavour doesnt exist locally. Fetching flavour...", spinner="arrow2"):
+        with console.status("Flavour doesnt exist locally. Fetching flavour...", spinner="dots8Bit"):
             client.pull(f"ghcr.io/raiyanyahya/{flavour}/{flavour}")
         container = create_environment(flavour, command, ports, name, client)
         dockerpty.start(client, container)

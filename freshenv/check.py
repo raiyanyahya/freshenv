@@ -51,5 +51,5 @@ def check() -> None:
     remove_old_tests(client)
     run_test_environment(client)
     remove_old_tests(client)
-    print(":sunrise: All test passed. Everything looks good.")
+    print(":sunrise:  All test passed. Everything looks good.")
     

@@ -37,6 +37,7 @@ setup(
     long_description_content_type='text/markdown',
     url="https://github.com/raiyanyahya/freshenv",
     author="Raiyan Yahya",
+    license="MIT",
     author_email="raiyanyahyadeveloper@gmail.com",
     keywords=["cli","developer-tools","productivity"],
     packages=find_packages(),

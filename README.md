@@ -60,6 +60,7 @@ Options:
 Commands:
   check      Check system compatibility for running freshenv.
   clean      Remove all freshenv flavours and environments.
+  flavours   Show all available flavours for provisioning.
   provision  Provision a developer environment.
   remove     Remove a freshenv environment.
   start      Resume working in an environment.
@@ -67,6 +68,17 @@ Commands:
 ```
 
 ### Commands and Options
+
+**```flavours```**
+```console
+Usage: fr flavours [OPTIONS]
+
+  Show all available flavours for provisioning.
+
+Options:
+  --help  Show this message and exit.
+```
+
 
 **```provision```**
 ```console
