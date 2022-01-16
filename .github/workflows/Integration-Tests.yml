@@ -23,5 +23,7 @@ jobs:
                python3 -m pip install --upgrade pip
                pip3 install setuptools wheel twine
                pip3 install .
-        - name: run freshenv
-          run: freshenv check
+               fr check
+               fr view
+               fr clean
+               fr flavours
