@@ -24,6 +24,8 @@ jobs:
                pip3 install setuptools wheel twine
                pip3 install .
                fr check
+               fr provision -c ls
                fr view
+               fr remove freshenv_1
                fr clean
                fr flavours
