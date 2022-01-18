@@ -161,4 +161,4 @@ See `contributing.md` for ways to get started. Please adhere to this project's `
 
 ## Contact
 
-Contact me through email at raiyanyahyadeveloper@gmail.com.
+Contact me through email at contact@freshenv.io
