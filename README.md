@@ -6,7 +6,7 @@
 ```freshenv``` is a  command line application to provision and manage local developer environments. Build and develop your projects in completely isolated environments. Save, switch and restart your environments. Choose from a wide variety of flavours to get the developer tools you need.\
 \
 <kbd>
-[![index069bf8c23f8f3244.gif](https://s10.gifyu.com/images/index069bf8c23f8f3244.gif)](https://gifyu.com/image/SbCDU)
+[![download-17adc07640182f121.gif](https://s10.gifyu.com/images/download-17adc07640182f121.gif)](https://gifyu.com/image/Sbsim)
 </kbd>
 ## The Story
 
