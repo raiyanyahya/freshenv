@@ -18,12 +18,12 @@ def clean(force: bool) -> None:
         for image in images_list:
             client.remove_image(image=image['Id'], force=force)
         print(":boom: freshenv flavours and environments removed.")
-    except errors.DockerException:
-        print(":cross_mark_button: Docker not installed or running. ")
     except errors.APIError as e:
         if e.status_code == 409:
             print(":runner: Found a [bold green]running[/bold green] environment. Close the session first or use the [bold blue]--force[/bold blue] flag.")
         else:
             raise Exception(e)
+    except errors.DockerException:
+        print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
-        print("Unknown exception: {}".format(e))
+        print(f"Unknown exception: {e}")

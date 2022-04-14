@@ -1,13 +1,14 @@
+from io import BytesIO
 from typing import Dict, List
 import click
 from docker import APIClient, errors
 import dockerpty
 from freshenv.util import PythonLiteralOption
 from freshenv.view import count_environents
-from rich import print
-from requests import exceptions
 from freshenv.console import console
+from requests import exceptions, get
 from os import getcwd, path
+from rich import print
 
 client: APIClient = None
 current_directory = getcwd()
@@ -27,7 +28,7 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str, 
         name = str(count_environents() + 1)
     container = client.create_container(
         name=f"freshenv_{name}",
-        image=f"ghcr.io/raiyanyahya/{flavour}/{flavour}",
+        image=f"raiyanyahya/{flavour}/{flavour}",
         stdin_open=stdin_open,
         tty=tty,
         command=command,
@@ -47,6 +48,20 @@ def pull_and_try_again(flavour: str, command: str, ports: List[str], name: str, 
     except (errors.ImageNotFound, exceptions.HTTPError):
         print(":x: flavour doesnt exist")
 
+def get_dockerfile_path(flavour: str) -> bytes:
+    req = get(f"https://raw.githubusercontent.com/raiyanyahya/{flavour}/master/dockerfile")
+    return req.text.encode('utf-8')
+
+def build_environment(flavour: str, command: str, ports: List[str], name: str, client: APIClient):
+    try:
+
+        with console.status("Flavour doesnt exist locally. Building flavour...", spinner="dots8Bit"):
+            [line for line in client.build(fileobj=BytesIO(get_dockerfile_path(flavour=flavour)), tag=f"raiyanyahya/{flavour}/{flavour}", rm=True, pull=True, decode=True)] # pylint: disable=expression-not-assigned
+        container = create_environment(flavour, command, ports, name, client)
+        dockerpty.start(client, container)
+    except (errors.APIError, exceptions.HTTPError):
+        print(":x: Flavour could not be built or found.")
+
 
 @click.command("provision")
 @click.option("--flavour","-f",default="base", help="The flavour of the environment.",show_default=True)
@@ -59,9 +74,10 @@ def provision(flavour: str, command: str, ports: List[str], name: str) -> None:
         client = APIClient(base_url="unix://var/run/docker.sock")
         container = create_environment(flavour, command, ports, name, client)
         dockerpty.start(client, container)
-    except (exceptions.HTTPError, errors.NotFound):
-        pull_and_try_again(flavour, command, ports, name,client)
+    except (errors.ImageNotFound,exceptions.HTTPError, errors.NotFound):
+        build_environment(flavour, command, ports, name,client)
+        #pull_and_try_again(flavour, command, ports, name,client) to be implemented in the cloud version
     except errors.DockerException:
         print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
-        print("Unknown exception: {}".format(e))
+        print(f"Unknown exception: {e}")

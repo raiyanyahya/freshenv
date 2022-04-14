@@ -1,12 +1,12 @@
 import click
 from docker import APIClient, errors
 from rich import print
-from freshenv.provision import create_environment
+from freshenv.provision import build_environment, create_environment
 import dockerpty
 from requests import exceptions
 import os
 from sys import exit
-freshenv_test_image = "ghcr.io/raiyanyahya/freshenv-busybox/freshenv-busybox"
+freshenv_test_image = "raiyanyahya/freshenv-busybox/freshenv-busybox"
 
 def check_docker():
     try:
@@ -25,7 +25,7 @@ def remove_old_tests(client: APIClient):
         print(":heavy_check_mark: Test images removed.")
     except errors.APIError as e:
         if e.status_code == 404:
-             print(":heavy_check_mark: No test images found. Moving on...")
+            print(":heavy_check_mark: No test images found. Moving on...")
     except Exception:
         print(":cross_mark_button: Could not remove freshenv test image. A freshenv test environment maybe still running.")
         exit(1)
@@ -33,12 +33,10 @@ def remove_old_tests(client: APIClient):
 def run_test_environment(client: APIClient):
     try:
         container = create_environment(flavour="freshenv-busybox", command="ls", ports=["3000","4000"],name="system_test", client=client)
-        dockerpty.start(client, container, stdout=open(os.devnull, "w"))
+        dockerpty.start(client, container, stdout=open(os.devnull, "w", encoding="utf-8"))
         print(":heavy_check_mark: Succesfully provisioned test environment.")
     except (exceptions.HTTPError, errors.NotFound):
-        client.pull(freshenv_test_image)
-        container = create_environment(flavour="freshenv-busybox", command="ls", ports=["3000","4000"], name="system_test", client=client)
-        dockerpty.start(client, container,open(os.devnull, "w"))
+        build_environment(flavour="freshenv-busybox", command="ls", ports=["3000","4000"], name="system_test", client=client)
         print(":heavy_check_mark: Succesfully provisioned test environment.")
     except Exception:
         print(":cross_mark_button: Could not provision test environment.")

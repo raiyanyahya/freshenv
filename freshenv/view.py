@@ -22,7 +22,6 @@ def view() -> None:
     """View local freshenv managed environments."""
     try:
         container_list = get_list_environments()
-        
         if not container_list:
             print(":computer: No freshenv environments found.")
         for container in container_list:
@@ -39,4 +38,4 @@ def view() -> None:
     except errors.DockerException:
         print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
-        print("Unknown exception: {}".format(e))
+        print(f"Unknown exception: {e}")

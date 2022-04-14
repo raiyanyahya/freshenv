@@ -20,4 +20,4 @@ def start(name: str) -> None:
     except errors.DockerException:
         print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
-        print("Unknown exception: {}".format(e))
+        print(f"Unknown exception: {e}")

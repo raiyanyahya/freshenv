@@ -16,12 +16,12 @@ def remove(name: str, force: bool) -> None:
         print(f":boom: {name} environment removed.")
     except errors.NotFound:
         print(f":ghost: No freshenv environment called [bold]{name}[/bold] found.")
-    except errors.DockerException:
-        print(":cross_mark_button: Docker not installed or running. ")
     except errors.APIError as e:
         if e.status_code == 409:
             print(f":runner: {name} is a [bold green]running[/bold green] environment. Close the session first or use the [bold blue]--force[/bold blue] flag.")
         else:
             raise Exception(e)
+    except errors.DockerException:
+        print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
-        print("Unknown exception: {}".format(e))
+        print(f"Unknown exception: {e}")
