@@ -8,14 +8,14 @@ jobs:
     integrations-tests:
       strategy:
         matrix:
-          os: [macos-10.15, ubuntu-latest]
+          os: [macos-latest, ubuntu-latest]
       runs-on: ${{ matrix.os }}
       steps:
         - uses: actions/checkout@v2
         - name: setup python
           uses: actions/setup-python@v2
           with:
-            python-version: 3.6
+            python-version: 3.8
         - uses: docker-practice/actions-setup-docker@master
         - run: |
                set -x
