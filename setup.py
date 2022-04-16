@@ -29,7 +29,7 @@ def get_version():
 
 setup(
     name="freshenv",
-    python_requires=">=3.6",
+    python_requires=">3.5",
     options={"bdist_wheel": {"universal": "1"}},
     version=get_version(),
     description="A cli to provision and manage local developer environments.",
