@@ -13,7 +13,7 @@ from rich import print
 client: APIClient = None
 current_directory = getcwd()
 folder = path.basename(current_directory)
-local_mount_binds = [f"{current_directory}:/home/devuser/{folder}:delegated"]
+local_mount_binds = [f"{current_directory}:/home/{folder}:delegated"]
 google_dns = ["8.8.8.8"]
 
 def get_port_bindings(ports: List[str]) -> Dict:
@@ -32,9 +32,9 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str, 
         stdin_open=stdin_open,
         tty=tty,
         command=command,
-        volumes=["/home/devuser"],
+        volumes=["/home"],
         ports=ports,
-        use_config_proxy=False,
+        use_config_proxy=True,
         host_config=client.create_host_config(port_bindings=get_port_bindings(ports),userns_mode="host",privileged=True,dns=google_dns,binds=local_mount_binds))
     return container
 
