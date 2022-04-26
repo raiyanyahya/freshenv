@@ -16,6 +16,7 @@ jobs:
           python3 -m pip install --upgrade pip
           pip3 install setuptools wheel twine
           sudo snap install snapcraft --classic
+          sudo snap install multipass
       - name: Build and publish
         env:
           TWINE_USERNAME: __token__
