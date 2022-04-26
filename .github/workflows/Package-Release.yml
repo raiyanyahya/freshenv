@@ -21,7 +21,8 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-          SNAPCRAFT_SECRET: ${{ secrets.SNAPCRAFT_SECRET }}
+          SNAP_TOKEN: ${{ secrets.SNAPCRAFT_SECRET }}
+          SNAPCRAFT_BUILD_ENVIRONMENT: host
         run: |
           python3 setup.py sdist bdist_wheel
           twine upload dist/*
