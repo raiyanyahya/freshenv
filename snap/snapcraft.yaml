@@ -1,5 +1,5 @@
 name: freshenv
-version: '0.3.8'
+version: '0.3.9'
 summary: A cli to provision and manage local developer environments.
 description: |
           A command line application to provision and manage local developer environments. Build and develop your projects in completely isolated environments. Save, switch and restart your environments. Choose from a wide variety of flavours to get the developer tools you need.
@@ -17,7 +17,7 @@ confinement: strict
 apps:
   freshenv:
     command: bin/freshenv
-    plugs: [network]
+    plugs: [network, docker]
 parts:
   freshenv:
     plugin: python
