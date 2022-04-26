@@ -1,1 +1,3 @@
 include .version
+exclude snap
+exclude snap/snapcraft.yml

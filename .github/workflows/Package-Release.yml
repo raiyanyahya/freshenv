@@ -15,10 +15,15 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip3 install setuptools wheel twine
+          sudo snap install snapcraft --classic
       - name: Build and publish
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+          SNAPCRAFT_SECRET: ${{ secrets.SNAPCRAFT_SECRET }}
         run: |
           python3 setup.py sdist bdist_wheel
           twine upload dist/*
+          snapcraft
+          snapcraft upload --release=stable *.snap
+
