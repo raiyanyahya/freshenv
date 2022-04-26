@@ -25,6 +25,7 @@ jobs:
         run: |
           python3 setup.py sdist bdist_wheel
           twine upload dist/*
+          echo "$SNAP_TOKEN" | snapcraft login --with -
           snapcraft
           snapcraft upload --release=stable *.snap
 
