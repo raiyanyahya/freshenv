@@ -28,7 +28,7 @@ Freshenv depends on docker and python. You must have ```docker``` and ```python3
 
 ## Installation Linux
 
-(WORK IN PROGRESS) I recommend using the snap package manager to install freshenv. 
+I recommend using the snap package manager to install freshenv. 
 
 ```console
   snap install freshenv
@@ -40,7 +40,7 @@ If you dont have or use snap, install the freshenv python package from pypi.
   pip install freshenv
 ```
 
-I would recoomend using pipx instead of pip to install cli applications on you machine.
+I would recommend using pipx instead of pip to install cli applications on you machine.
 
 ## Installation MacOS
 

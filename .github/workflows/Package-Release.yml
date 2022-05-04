@@ -24,9 +24,9 @@ jobs:
           SNAP_TOKEN: ${{ secrets.SNAPCRAFT_SECRET }}
           SNAPCRAFT_BUILD_ENVIRONMENT: host
         run: |
-          python3 setup.py sdist bdist_wheel
-          twine upload dist/*
           echo "$SNAP_TOKEN" | snapcraft login --with -
           snapcraft
           snapcraft upload --release=stable *.snap
+          python3 setup.py sdist bdist_wheel
+          twine upload dist/*
 
