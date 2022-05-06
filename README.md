@@ -31,7 +31,8 @@ Freshenv depends on docker and python. You must have ```docker``` and ```python3
 I recommend using the snap package manager to install freshenv. 
 
 ```console
-  snap install freshenv # give it access to the docker interface
+  snap install freshenv 
+  snap connect freshenv:docker docker:docker-daemon # give it access to the docker interface
 ```
 
 If you dont have or use snap, install the freshenv python package from pypi. 
