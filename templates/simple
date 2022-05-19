@@ -1,0 +1,7 @@
+
+from {{ base }}
+RUN {{ install }}
+USER root
+ENV TERM xterm
+WORKDIR /home
+CMD ["bash"]
