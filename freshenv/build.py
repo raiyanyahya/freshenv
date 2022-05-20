@@ -1,7 +1,6 @@
 from io import BytesIO
 from os import makedirs, path
-from configparser import ConfigParser
-from numpy import False_
+from configparser import ConfigParser, SectionProxy
 from rich import print
 from jinja2 import Environment, FileSystemLoader
 import click
@@ -27,7 +26,7 @@ def config_exists() -> bool:
     return True
 
 
-def get_key_values_from_config(flavour: str) -> dict:
+def get_key_values_from_config(flavour: str) -> SectionProxy:
     config = ConfigParser()
     config.read(freshenv_config_location)
     return config[flavour]
@@ -85,5 +84,6 @@ def build(flavour: str, logs: bool) -> None:
     client = APIClient(base_url="unix://var/run/docker.sock")
     with console.status("Building custom flavour...", spinner="point"):
         for line in client.build(fileobj=BytesIO(flavour_dockerfile.encode('utf-8')), tag=f"raiyanyahya/{flavour}/{flavour}", rm=True, pull=True, decode=True):
-            print(line) if logs else None
+            if logs:
+                print(line)
     print(f":party_popper: Successfully built custom flavour {flavour}. You can provision it by running [bold]freshenv -provision -f {flavour}[/bold].")
