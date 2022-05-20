@@ -2,8 +2,9 @@ from typing import Dict, List
 import click
 from docker import APIClient, errors
 from rich import print
-client: APIClient = None
 
+
+client: APIClient = None
 
 
 def count_environents() -> int:

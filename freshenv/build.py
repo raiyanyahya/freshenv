@@ -1,6 +1,7 @@
 from io import BytesIO
 from os import makedirs, path
 from configparser import ConfigParser
+from numpy import False_
 from rich import print
 from jinja2 import Environment, FileSystemLoader
 import click
@@ -26,28 +27,28 @@ def config_exists() -> bool:
     return True
 
 
-def get_key_values_from_config(cenv: str) -> dict:
+def get_key_values_from_config(flavour: str) -> dict:
     config = ConfigParser()
     config.read(freshenv_config_location)
-    return config[cenv]
+    return config[flavour]
 
 
-def env_exists(cenv: str) -> bool:
+def env_exists(flavour: str) -> bool:
     config = ConfigParser()
     config.read(freshenv_config_location)
-    if cenv not in config.sections():
+    if flavour not in config.sections():
         return False
     return True
 
 
-def mandatory_keys_exists(cenv: str) -> bool:
+def mandatory_keys_exists(flavour: str) -> bool:
     config = ConfigParser()
     config.read(freshenv_config_location)
-    if "BASE" not in config[cenv]:
+    if "BASE" not in config[flavour]:
         return False
-    if "INSTALL" not in config[cenv]:
+    if "INSTALL" not in config[flavour]:
         return False
-    if "CMD" not in config[cenv]:
+    if "CMD" not in config[flavour]:
         return False
     return True
 
@@ -57,25 +58,32 @@ def create_file(location: str) -> None:
     open(location, "w", encoding="utf8").close()
 
 
-@click.command("build")
-@click.argument("cenv")
-def build(cenv: str) -> None:
-    """Build a custom freshenv environment."""
-
+def run_checks(flavour: str) -> bool:
     if not config_exists():
         print(f":card_index: No config file found. Creating an empty config at {freshenv_config_location}.")
         create_file(freshenv_config_location)
+        return False
+    if not env_exists(flavour):
+        print(f":exclamation_mark:configuration for custom flavour {flavour} does not exist.")
+        return False
+    if not mandatory_keys_exists(flavour):
+        print(":exclamation_mark: missing mandatory keys in configuration for custom environment {flavour}.")
+        return False
+    return True
+
+@click.command("build")
+@click.argument("flavour")
+@click.option('--logs', '-l', is_flag=True, help="Show build logs")
+def build(flavour: str, logs: bool) -> None:
+    """Build a custom freshenv environment."""
+
+    if not run_checks(flavour):
         return
-    if not env_exists(cenv):
-        print(f":exclamation_mark: configuration for custom environment {cenv} does not exist.")
-        return
-    if not mandatory_keys_exists(cenv):
-        print(":exclamation_mark: missing mandatory keys in configuration for custom environment {cenv}.")
-        return
-    cenv_config = get_key_values_from_config(cenv)
-    cenv_dockerfile = create_dockerfile(cenv_config["base"], cenv_config["install"], cenv_config["cmd"])
+
+    flavour_config = get_key_values_from_config(flavour)
+    flavour_dockerfile = create_dockerfile(flavour_config["base"], flavour_config["install"], flavour_config["cmd"])
     client = APIClient(base_url="unix://var/run/docker.sock")
-    with console.status("Building custom flavour...", spinner="dots8Bit"):
-        response = [line for line in client.build(fileobj=BytesIO(cenv_dockerfile.encode('utf-8')), tag=f"raiyanyahya/{cenv}/{cenv}", rm=True, pull=True, decode=True)]
-    for line in response:
-        print(line)
+    with console.status("Building custom flavour...", spinner="point"):
+        for line in client.build(fileobj=BytesIO(flavour_dockerfile.encode('utf-8')), tag=f"raiyanyahya/{flavour}/{flavour}", rm=True, pull=True, decode=True):
+            print(line) if logs else None
+    print(f":party_popper: Successfully built custom flavour {flavour}. You can provision it by running [bold]freshenv -provision -f {flavour}[/bold].")
