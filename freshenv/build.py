@@ -13,10 +13,10 @@ homedir = path.expanduser("~")
 freshenv_config_location = homedir + "/.freshenv/freshenv"
 
 
-def create_dockerfile(base: str, install: str) -> str:
+def create_dockerfile(base: str, install: str, cmd: str) -> str:
     env = Environment(loader=FileSystemLoader('templates'))
     template = env.get_template('simple')
-    build_template = template.render(base=base, install=install)
+    build_template = template.render(base=base, install=install, cmd=cmd)
     return build_template
 
 
@@ -47,6 +47,8 @@ def mandatory_keys_exists(cenv: str) -> bool:
         return False
     if "INSTALL" not in config[cenv]:
         return False
+    if "CMD" not in config[cenv]:
+        return False
     return True
 
 
@@ -59,22 +61,21 @@ def create_file(location: str) -> None:
 @click.argument("cenv")
 def build(cenv: str) -> None:
     """Build a custom freshenv environment."""
+
     if not config_exists():
-        print(
-            f":card_index: No config file found. Creating an empty config at {freshenv_config_location}.")
+        print(f":card_index: No config file found. Creating an empty config at {freshenv_config_location}.")
         create_file(freshenv_config_location)
         return
     if not env_exists(cenv):
-        print(
-            f":exclamation_mark: configuration for custom environment {cenv} does not exist.")
+        print(f":exclamation_mark: configuration for custom environment {cenv} does not exist.")
         return
     if not mandatory_keys_exists(cenv):
-        print(
-            ":exclamation_mark: missing mandatory keys in configuration for custom environment {cenv}.")
+        print(":exclamation_mark: missing mandatory keys in configuration for custom environment {cenv}.")
         return
     cenv_config = get_key_values_from_config(cenv)
-    cenv_dockerfile = create_dockerfile(
-        cenv_config["BASE"], cenv_config["INSTALL"])
+    cenv_dockerfile = create_dockerfile(cenv_config["base"], cenv_config["install"], cenv_config["cmd"])
     client = APIClient(base_url="unix://var/run/docker.sock")
     with console.status("Building custom flavour...", spinner="dots8Bit"):
-        [line for line in client.build(fileobj=BytesIO(cenv_dockerfile.encode('utf-8')), tag=f"raiyanyahya/{cenv}/{cenv}", rm=True, pull=True, decode=True)]  # pylint: disable=expression-not-assigned
+        response = [line for line in client.build(fileobj=BytesIO(cenv_dockerfile.encode('utf-8')), tag=f"raiyanyahya/{cenv}/{cenv}", rm=True, pull=True, decode=True)]
+    for line in response:
+        print(line)

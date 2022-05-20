@@ -14,6 +14,8 @@ def get_list_environments() -> List[Dict]:
     environment_list = []
     client = APIClient(base_url="unix://var/run/docker.sock")
     environment_list = client.containers(all=True,filters={"label": "maintainer=Raiyan Yahya <raiyanyahyadeveloper@gmail.com>"})
+    custom_environment_list = client.containers(all=True,filters={"label": "Custom Environment"})
+    environment_list = environment_list + custom_environment_list
     return environment_list
 
 

@@ -65,7 +65,7 @@ def build_environment(flavour: str, command: str, ports: List[str], name: str, c
 
 @click.command("provision")
 @click.option("--flavour","-f",default="base", help="The flavour of the environment.",show_default=True)
-@click.option("--command","-c",default="zsh", help="The command to execute at startup of environment.",show_default=True)
+@click.option("--command","-c", help="The command to execute at startup of environment.")
 @click.option("--ports","-p", default='["3000","4000"]', cls=PythonLiteralOption, help="String list of ports to forward.", show_default=True)
 @click.option("--name","-n", default="index", help="Name of your environment.", show_default=False)
 def provision(flavour: str, command: str, ports: List[str], name: str) -> None:
