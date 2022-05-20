@@ -14,7 +14,7 @@ freshenv_config_location = homedir + "/.freshenv/freshenv"
 
 
 def create_dockerfile(base: str, install: str, cmd: str) -> str:
-    env = Environment(loader=FileSystemLoader('templates'))
+    env = Environment(loader=FileSystemLoader("templates"), autoescape=True)
     template = env.get_template('simple')
     build_template = template.render(base=base, install=install, cmd=cmd)
     return build_template
