@@ -75,7 +75,7 @@ def run_checks(flavour: str) -> bool:
 @click.argument("flavour")
 @click.option('--logs', '-l', is_flag=True, help="Show build logs")
 def build(flavour: str, logs: bool) -> None:
-    """Build a custom freshenv environment."""
+    """Build a custom freshenv flavour."""
 
     if not run_checks(flavour):
         return

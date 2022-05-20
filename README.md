@@ -32,7 +32,9 @@ I recommend using the snap package manager to install freshenv.
 
 ```console
   snap install freshenv 
-  snap connect freshenv:docker docker:docker-daemon # give it access to the docker interface
+  
+  # give it access to the docker interface
+  snap connect freshenv:docker docker:docker-daemon 
 ```
 
 If you dont have or use snap, install the freshenv python package from pypi. 
@@ -66,6 +68,7 @@ Options:
   --help     Show this message and exit.
 
 Commands:
+  build      Build a custom freshenv flavour.
   check      Check system compatibility for running freshenv.
   clean      Remove all freshenv flavours and environments.
   flavours   Show all available flavours for provisioning.
@@ -90,13 +93,13 @@ Options:
 
 **```provision```**
 ```console
-Usage: freshenv provision [OPTIONS]
+Usage: fr provision [OPTIONS]
 
   Provision a developer environment.
 
 Options:
   -f, --flavour TEXT   The flavour of the environment.  [default: base]
-  -c, --command TEXT   The command to execute at startup of environment.[default: zsh]
+  -c, --command TEXT   The command to execute at startup of environment.
   -p, --ports INTEGER  List of ports to forward.  [default: 3000]
   -n, --name TEXT      Name of your environment.
   --help               Show this message and exit.
@@ -105,7 +108,7 @@ Options:
 
 **```start```**
 ```console
-Usage: freshenv start [OPTIONS] NAME
+Usage: fr start [OPTIONS] NAME
 
   Resume working in an environment.
 
@@ -115,7 +118,7 @@ Options:
 
 **```remove```**
 ```console
-Usage: freshenv remove [OPTIONS] NAME
+Usage: fr remove [OPTIONS] NAME
 
   Remove a freshenv environment.
 
@@ -126,7 +129,7 @@ Options:
 
 **```view```**
 ```console
-Usage: freshenv view [OPTIONS]
+Usage: fr view [OPTIONS]
 
   View local freshenv managed environments.
 
@@ -136,7 +139,7 @@ Options:
 
 **```check```**
 ```console
-Usage: freshenv check [OPTIONS]
+Usage: fr check [OPTIONS]
 
   Check system compatibility for running freshenv.
 
@@ -153,6 +156,17 @@ Usage: fr clean [OPTIONS]
 Options:
   -f, --force  Force remove freshenv flavours and environments.
   --help       Show this message and exit.
+```
+
+**```build```**
+```console
+Usage: fr build [OPTIONS] FLAVOUR
+
+  Build a custom freshenv flavour.
+
+Options:
+  -l, --logs  Show build logs.
+  --help      Show this message and exit
 ```
 
 ## License
