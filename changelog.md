@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 
-## [Unreleased]
+## [1.1.0] - May 21, 2022
 - Enabled custom flavours by adding build command.
 - removed the default value "zsh" to the --command/-c option to the provision command.
 - An empty freshenv config file will be automatically created if no config is found when running the build command.
