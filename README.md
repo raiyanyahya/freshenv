@@ -24,7 +24,18 @@ I imagine it would help developers like me. I hope you like it.
 
 ```freshenv flavours``` are different configurations for freshenv environments. You choose a flavour and provision it as an environment. A flavour can be a combination of operating systems, language packs, tools and application bundles. By default freshenv provisions you with a ```base``` flavour which runs ubuntu 18.04 and has packages like ```wget git python3-pip curl zsh wget nano zsh``` and more. The base flavour is a 260mb environment when provisioned. There are bigger flavours like ```devenv``` which runs on the latest ubuntu and has been loaded and configured with ```docker (run docker inside your freshenv environment), golang, python, node, java, a vscode server, build-essential automake make cmake sudo g++ wget git python3-pip curl zsh wget nano nodejs npm fonts-powerline``` and more. This environment is around 1.6gb large. Freshenv also gives you the option to provision a language based environment which contains necessary developer tools for that language. Checkout the usage section below on the flavours command to see a list of flavours available.
 
-Freshenv depends on docker and python. You must have ```docker``` and ```python3.6+```  installed to be able to use the cli.
+## Custom Environments
+
+Freshenv lets developers build and provision custom environments. A custom flavour is a configuration of the base operating system, packages to install and the command to run when your environment is provisioned. Custom flavours are configured in a config file placed under $HOME/.freshenv/freshenv. This file will be automatically created once you run ```freshenv build config```. Below is an example of a custom flavour.
+
+```yml
+[MyEnv]
+base="ubuntu"
+install="apt update -y && apt upgrade -y && apt install arandr"
+cmd="bash"
+```
+
+This feature is part of the 1.1.0 release and is not available in older versions.
 
 ## Installation Linux
 
