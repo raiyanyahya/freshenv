@@ -29,3 +29,9 @@ jobs:
                fr remove freshenv_1
                fr clean
                fr flavours
+               fr build testenv
+               echo "[testenv]" >> ~/.freshenv/freshenv
+               echo "base=ubuntu" >> ~/.freshenv/freshenv
+               echo "install=apt update -y" >> ~/.freshenv/freshenv
+               echo "cmd=bash" >> ~/.freshenv/freshenv
+               fr build testenv

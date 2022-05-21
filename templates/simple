@@ -1,0 +1,12 @@
+
+FROM {{ base }}
+
+LABEL maintainer="Custom Environment"
+
+RUN {{ install }}
+
+USER root
+ENV TERM xterm
+WORKDIR /home
+
+CMD ["{{ cmd }}"]

@@ -24,7 +24,18 @@ I imagine it would help developers like me. I hope you like it.
 
 ```freshenv flavours``` are different configurations for freshenv environments. You choose a flavour and provision it as an environment. A flavour can be a combination of operating systems, language packs, tools and application bundles. By default freshenv provisions you with a ```base``` flavour which runs ubuntu 18.04 and has packages like ```wget git python3-pip curl zsh wget nano zsh``` and more. The base flavour is a 260mb environment when provisioned. There are bigger flavours like ```devenv``` which runs on the latest ubuntu and has been loaded and configured with ```docker (run docker inside your freshenv environment), golang, python, node, java, a vscode server, build-essential automake make cmake sudo g++ wget git python3-pip curl zsh wget nano nodejs npm fonts-powerline``` and more. This environment is around 1.6gb large. Freshenv also gives you the option to provision a language based environment which contains necessary developer tools for that language. Checkout the usage section below on the flavours command to see a list of flavours available.
 
-Freshenv depends on docker and python. You must have ```docker``` and ```python3.6+```  installed to be able to use the cli.
+## Custom Environments
+
+Freshenv lets developers build and provision custom environments. A custom flavour is a configuration of the base operating system, packages to install and the command to run when your environment is provisioned. Custom flavours are configured in a config file placed under $HOME/.freshenv/freshenv. This file will be automatically created once you run ```freshenv build config```. Below is an example of a custom flavour.
+
+```yml
+[MyEnv]
+base="ubuntu"
+install="apt update -y && apt upgrade -y && apt install arandr"
+cmd="bash"
+```
+
+This feature is part of the 1.1.0 release and is not available in older versions.
 
 ## Installation Linux
 
@@ -32,7 +43,9 @@ I recommend using the snap package manager to install freshenv.
 
 ```console
   snap install freshenv 
-  snap connect freshenv:docker docker:docker-daemon # give it access to the docker interface
+  
+  # give it access to the docker interface
+  snap connect freshenv:docker docker:docker-daemon 
 ```
 
 If you dont have or use snap, install the freshenv python package from pypi. 
@@ -66,6 +79,7 @@ Options:
   --help     Show this message and exit.
 
 Commands:
+  build      Build a custom freshenv flavour.
   check      Check system compatibility for running freshenv.
   clean      Remove all freshenv flavours and environments.
   flavours   Show all available flavours for provisioning.
@@ -90,13 +104,13 @@ Options:
 
 **```provision```**
 ```console
-Usage: freshenv provision [OPTIONS]
+Usage: fr provision [OPTIONS]
 
   Provision a developer environment.
 
 Options:
   -f, --flavour TEXT   The flavour of the environment.  [default: base]
-  -c, --command TEXT   The command to execute at startup of environment.[default: zsh]
+  -c, --command TEXT   The command to execute at startup of environment.
   -p, --ports INTEGER  List of ports to forward.  [default: 3000]
   -n, --name TEXT      Name of your environment.
   --help               Show this message and exit.
@@ -105,7 +119,7 @@ Options:
 
 **```start```**
 ```console
-Usage: freshenv start [OPTIONS] NAME
+Usage: fr start [OPTIONS] NAME
 
   Resume working in an environment.
 
@@ -115,7 +129,7 @@ Options:
 
 **```remove```**
 ```console
-Usage: freshenv remove [OPTIONS] NAME
+Usage: fr remove [OPTIONS] NAME
 
   Remove a freshenv environment.
 
@@ -126,7 +140,7 @@ Options:
 
 **```view```**
 ```console
-Usage: freshenv view [OPTIONS]
+Usage: fr view [OPTIONS]
 
   View local freshenv managed environments.
 
@@ -136,7 +150,7 @@ Options:
 
 **```check```**
 ```console
-Usage: freshenv check [OPTIONS]
+Usage: fr check [OPTIONS]
 
   Check system compatibility for running freshenv.
 
@@ -153,6 +167,17 @@ Usage: fr clean [OPTIONS]
 Options:
   -f, --force  Force remove freshenv flavours and environments.
   --help       Show this message and exit.
+```
+
+**```build```**
+```console
+Usage: fr build [OPTIONS] FLAVOUR
+
+  Build a custom freshenv flavour.
+
+Options:
+  -l, --logs  Show build logs.
+  --help      Show this message and exit
 ```
 
 ## License
