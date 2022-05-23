@@ -2,3 +2,4 @@ include .version
 exclude snap
 exclude snap/snapcraft.yml
 include templates
+include templates/simple
