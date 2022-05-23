@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.2] - May 23, 2022
+- fixed the manifest file to add the template/simple dockerfile
+
 ## [1.1.1] - May 23, 2022
 - fixed the manifest file to add the template/simple dockerfile
 
