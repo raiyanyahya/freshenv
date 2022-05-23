@@ -30,9 +30,9 @@ Freshenv lets developers build and provision custom environments. A custom flavo
 
 ```yml
 [MyEnv]
-base="ubuntu"
-install="apt update -y && apt upgrade -y && apt install arandr"
-cmd="bash"
+base=ubuntu
+install=apt update -y && apt upgrade -y && apt install arandr
+cmd=bash
 ```
 
 This feature is part of the 1.1.0 release and is not available in older versions.

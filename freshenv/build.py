@@ -4,9 +4,9 @@ from configparser import ConfigParser, SectionProxy
 from rich import print
 from jinja2 import Environment, FileSystemLoader
 import click
-from docker import APIClient
+from docker import APIClient, errors
 from freshenv.console import console
-
+from requests import exceptions
 
 
 homedir = path.expanduser("~")
@@ -14,7 +14,7 @@ freshenv_config_location = homedir + "/.freshenv/freshenv"
 
 
 def create_dockerfile(base: str, install: str, cmd: str) -> str:
-    env = Environment(loader=FileSystemLoader("templates"), autoescape=True)
+    env = Environment(loader=FileSystemLoader("freshenv/templates"), autoescape=True)
     template = env.get_template('simple')
     build_template = template.render(base=base, install=install, cmd=cmd)
     return build_template
@@ -80,9 +80,13 @@ def build(flavour: str, logs: bool) -> None:
 
     flavour_config = get_key_values_from_config(flavour)
     flavour_dockerfile = create_dockerfile(flavour_config["base"], flavour_config["install"], flavour_config["cmd"])
-    client = APIClient(base_url="unix://var/run/docker.sock")
-    with console.status("Building custom flavour...", spinner="point"):
-        for line in client.build(fileobj=BytesIO(flavour_dockerfile.encode('utf-8')), tag=f"raiyanyahya/{flavour}/{flavour}", rm=True, pull=True, decode=True):
-            if logs:
-                print(line)
+    print(flavour_dockerfile)
+    try:
+        client = APIClient(base_url="unix://var/run/docker.sock")
+        with console.status("Building custom flavour...", spinner="point"):
+            for line in client.build(fileobj=BytesIO(flavour_dockerfile.encode('utf-8')), tag=f"raiyanyahya/{flavour}/{flavour}", rm=True, pull=True, decode=True):
+                if logs:
+                    print(line)
+    except (errors.APIError, exceptions.HTTPError):
+        print(":x: Custom flavour could not be built.")
     print(f":party_popper: Successfully built custom flavour {flavour}. You can provision it by running [bold]freshenv -provision -f {flavour}[/bold].")
