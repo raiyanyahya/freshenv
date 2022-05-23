@@ -80,7 +80,6 @@ def build(flavour: str, logs: bool) -> None:
 
     flavour_config = get_key_values_from_config(flavour)
     flavour_dockerfile = create_dockerfile(flavour_config["base"], flavour_config["install"], flavour_config["cmd"])
-    print(flavour_dockerfile)
     try:
         client = APIClient(base_url="unix://var/run/docker.sock")
         with console.status("Building custom flavour...", spinner="point"):
