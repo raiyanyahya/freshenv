@@ -28,7 +28,7 @@ def create_environment(flavour: str, command: str, ports: List[str], name: str, 
         name = str(count_environents() + 1)
     container = client.create_container(
         name=f"freshenv_{name}",
-        image=f"raiyanyahya/{flavour}/{flavour}",
+        image=f"raiyanyahya/freshenv-flavours/{flavour}",
         stdin_open=stdin_open,
         tty=tty,
         command=command,
@@ -49,14 +49,14 @@ def pull_and_try_again(flavour: str, command: str, ports: List[str], name: str, 
         print(":x: flavour doesnt exist")
 
 def get_dockerfile_path(flavour: str) -> bytes:
-    req = get(f"https://raw.githubusercontent.com/raiyanyahya/{flavour}/master/dockerfile")
+    req = get(f"https://raw.githubusercontent.com/raiyanyahya/freshenv-flavours/master/{flavour}")
     return req.text.encode('utf-8')
 
 def build_environment(flavour: str, command: str, ports: List[str], name: str, client: APIClient):
     try:
 
         with console.status("Flavour doesnt exist locally. Building flavour...", spinner="dots8Bit"):
-            [line for line in client.build(fileobj=BytesIO(get_dockerfile_path(flavour=flavour)), tag=f"raiyanyahya/{flavour}/{flavour}", rm=True, pull=True, decode=True)] # pylint: disable=expression-not-assigned
+            [line for line in client.build(fileobj=BytesIO(get_dockerfile_path(flavour=flavour)), tag=f"raiyanyahya/freshenv-flavours/{flavour}", rm=True, pull=True, decode=True)] # pylint: disable=expression-not-assigned
         container = create_environment(flavour, command, ports, name, client)
         dockerpty.start(client, container)
     except (errors.APIError, exceptions.HTTPError):

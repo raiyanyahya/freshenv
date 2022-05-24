@@ -6,7 +6,7 @@ import dockerpty
 from requests import exceptions
 import os
 from sys import exit
-freshenv_test_image = "raiyanyahya/freshenv-busybox/freshenv-busybox"
+freshenv_test_image = "raiyanyahya/freshenv-flavours/freshenv-busybox"
 
 def check_docker():
     try:

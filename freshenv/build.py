@@ -2,20 +2,23 @@ from io import BytesIO
 from os import makedirs, path
 from configparser import ConfigParser, SectionProxy
 from rich import print
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, BaseLoader
 import click
 from docker import APIClient, errors
 from freshenv.console import console
+from freshenv.provision import get_dockerfile_path
 from requests import exceptions
+
 
 
 homedir = path.expanduser("~")
 freshenv_config_location = homedir + "/.freshenv/freshenv"
 
 
+
 def create_dockerfile(base: str, install: str, cmd: str) -> str:
-    env = Environment(loader=FileSystemLoader("freshenv/templates"), autoescape=True)
-    template = env.get_template('simple')
+    contents = get_dockerfile_path("simple")
+    template = Environment(loader=BaseLoader(), autoescape=True).from_string(str(contents.decode("utf-8")))
     build_template = template.render(base=base, install=install, cmd=cmd)
     return build_template
 
@@ -43,11 +46,11 @@ def env_exists(flavour: str) -> bool:
 def mandatory_keys_exists(flavour: str) -> bool:
     config = ConfigParser()
     config.read(freshenv_config_location)
-    if "BASE" not in config[flavour]:
+    if "base" not in config[flavour]:
         return False
-    if "INSTALL" not in config[flavour]:
+    if "install" not in config[flavour]:
         return False
-    if "CMD" not in config[flavour]:
+    if "cmd" not in config[flavour]:
         return False
     return True
 
@@ -83,9 +86,10 @@ def build(flavour: str, logs: bool) -> None:
     try:
         client = APIClient(base_url="unix://var/run/docker.sock")
         with console.status("Building custom flavour...", spinner="point"):
-            for line in client.build(fileobj=BytesIO(flavour_dockerfile.encode('utf-8')), tag=f"raiyanyahya/{flavour}/{flavour}", rm=True, pull=True, decode=True):
+            for line in client.build(fileobj=BytesIO(flavour_dockerfile.encode("utf-8")), tag=f"raiyanyahya/custom/{flavour}", rm=True, pull=True, decode=True):
                 if logs:
                     print(line)
-    except (errors.APIError, exceptions.HTTPError):
+    except (errors.APIError, exceptions.HTTPError) as e:
         print(":x: Custom flavour could not be built.")
+        print(f"Error: {e}")
     print(f":party_popper: Successfully built custom flavour {flavour}. You can provision it by running [bold]freshenv -provision -f {flavour}[/bold].")
