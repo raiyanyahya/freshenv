@@ -32,6 +32,6 @@ jobs:
                fr build testenv
                echo "[testenv]" >> ~/.freshenv/freshenv
                echo "base=ubuntu" >> ~/.freshenv/freshenv
-               echo "install=apt update -y" >> ~/.freshenv/freshenv
+               echo "install=apt update -y && apt upgrade -y && apt install snapd -y" >> ~/.freshenv/freshenv
                echo "cmd=bash" >> ~/.freshenv/freshenv
                fr build testenv
