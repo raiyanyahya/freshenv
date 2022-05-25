@@ -2,7 +2,7 @@ from io import BytesIO
 from os import makedirs, path
 from configparser import ConfigParser, SectionProxy
 from rich import print
-from jinja2 import Environment, BaseLoader
+from jinja2 import Environment
 import click
 from docker import APIClient, errors
 from freshenv.console import console
@@ -10,15 +10,13 @@ from freshenv.provision import get_dockerfile_path
 from requests import exceptions
 
 
-
 homedir = path.expanduser("~")
 freshenv_config_location = homedir + "/.freshenv/freshenv"
 
 
-
 def create_dockerfile(base: str, install: str, cmd: str) -> str:
     contents = get_dockerfile_path("simple")
-    template = Environment(loader=BaseLoader(), autoescape=True).from_string(str(contents.decode("utf-8")))
+    template = Environment(autoescape=True).from_string(str(contents.decode("utf-8")))
     build_template = template.render(base=base, install=install, cmd=cmd)
     return build_template
 
@@ -86,10 +84,13 @@ def build(flavour: str, logs: bool) -> None:
     try:
         client = APIClient(base_url="unix://var/run/docker.sock")
         with console.status("Building custom flavour...", spinner="point"):
-            for line in client.build(fileobj=BytesIO(flavour_dockerfile.encode("utf-8")), tag=f"raiyanyahya/custom/{flavour}", rm=True, pull=True, decode=True):
+            for line in client.build(fileobj=BytesIO(flavour_dockerfile.encode("utf-8")), tag=f"raiyanyahya/freshenv-flavours/{flavour}", rm=True, pull=True, decode=True):
+                if "errorDetail" in line:
+                    raise Exception(line["errorDetail"]["message"])
                 if logs:
                     print(line)
-    except (errors.APIError, exceptions.HTTPError) as e:
-        print(":x: Custom flavour could not be built.")
-        print(f"Error: {e}")
-    print(f":party_popper: Successfully built custom flavour {flavour}. You can provision it by running [bold]freshenv -provision -f {flavour}[/bold].")
+        print(f":party_popper: Successfully built custom flavour {flavour}. You can provision it by running [bold]freshenv provision -f {flavour}[/bold].")
+    except (errors.APIError, exceptions.HTTPError):
+        print(":x: Custom flavour could not be built. Try again after cleaning up with [bold]fr clean --force [/bold]")
+    except Exception as e:
+        print(f":x: Custom flavour could not be built due to the error: {e}.")

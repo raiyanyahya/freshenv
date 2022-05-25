@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.4] - May 23, 2022
+- Fixed issue with the build command since Jinja2 was escaping && and the install command wasnt working.
+
 ## [1.1.4] - May 23, 2022
 - Removed the template folder and started fetching the templates from github.
 - Moved all flavours to one new repo called freshenv-flavours.
