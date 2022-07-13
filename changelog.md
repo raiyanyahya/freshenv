@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] July 12, 2022
+- Moving to a different license. All cloud features will also be published under this new license.
+
 ## [1.2.4] - May 23, 2022
 - Fixed issue with the build command since Jinja2 was escaping && and the install command wasnt working.
 

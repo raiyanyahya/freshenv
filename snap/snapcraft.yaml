@@ -1,5 +1,5 @@
 name: freshenv
-version: '1.2.4'
+version: 2.0.0
 summary: A cli to provision and manage local developer environments.
 description: |
           A command line application to provision and manage local developer environments. Build and develop your projects in completely isolated environments. Save, switch and restart your environments. Choose from a wide variety of flavours to get the developer tools you need.
@@ -8,7 +8,6 @@ contact: contact@freshenv.io
 website: https://freshenv.io
 source-code: https://github.com/raiyanyahya/freshenv
 issues: https://github.com/raiyanyahya/freshenv/issues
-license: MIT
 architectures:
     - build-on: [arm64, armhf, amd64]
 grade: stable
