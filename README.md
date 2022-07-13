@@ -182,7 +182,7 @@ Options:
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+Freshenv is a free for open-source projects, however, if you are using the library for business and commercial projects choose the commercial license to keep your source proprietary to yourself. You can obtain single developer licenses for [$25](https://raiyanyahya.gumroad.com/l/freshenv) with lifetime access.
 
 
 ## Contributing
