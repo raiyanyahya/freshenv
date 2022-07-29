@@ -30,4 +30,4 @@ def fetch(environment_name: str) -> None:
 @click.argument("plan",type=click.Choice(["freshenv", "personal"]))
 def config(plan: str) -> None:
     """View personal and freshenv cloud configurations."""
-    view_config(plan)
+    view_config("cloud."+plan)
