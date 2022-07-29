@@ -10,8 +10,7 @@ freshenv_config_location = homedir + "/.freshenv/freshenv"
 def check_run(config_type: str) -> bool:
     """Check if cloud configuration is valid."""
     if not config_exists():
-        print(
-            f":card_index: No config file found. Creating an empty config at {freshenv_config_location}.")
+        print(f":card_index: No config file found. Creating an empty config at {freshenv_config_location}.")
         create_file(freshenv_config_location)
         return False
     if not key_exists(config_type):
