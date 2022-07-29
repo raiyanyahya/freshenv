@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 from os import path
+from typing import Dict
 from rich import pretty, print
 from freshenv.build import config_exists, create_file, key_exists, get_key_values_from_config
 
@@ -39,10 +40,14 @@ def mandatory_keys_exists(config_type: str) -> bool:
     return True
 
 
-def view_config(config_type: str) -> dict[str, str]:
-    """View personal and freshenv cloud configurations."""
+def get_config(config_type: str) -> dict:
     if not check_run(config_type):
         return
     cloud_config = dict(get_key_values_from_config(config_type))
-    pretty.pprint(cloud_config)
     return cloud_config
+
+
+def view_config(config_type: str) -> None:
+    """View personal and freshenv cloud configurations."""
+    cloud_config = get_config(config_type)
+    pretty.pprint(cloud_config)
