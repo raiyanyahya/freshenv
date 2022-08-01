@@ -31,6 +31,8 @@ def mandatory_keys_exists(config_type: str) -> bool:
             return False
         if "aws_profile" not in config[config_type]:
             return False
+        if "bucket" not in config[config_type]:
+            return False
     elif "freshenv" in config_type:
         if "apikey" not in config[config_type]:
             return False

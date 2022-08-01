@@ -28,6 +28,14 @@ def list_environments_from_aws(config_obj: dict) -> None:
 def list_environments(plan: str) -> None:
     """List your custom cloud environments."""
     if plan == "personal":
-        config_obj = get_config(plan)
-        if config_obj and config_obj.get("provider") == 'aws':
-            list_environments_from_aws(config_obj)
+        config_obj = get_config(f"cloud.{plan}")
+        if config_obj and config_obj["provider"]:
+            provider = config_obj["provider"]
+            if provider == "aws":
+                list_environments_from_aws(config_obj)
+            else:
+                print(f":man_facepalming: {provider} provider not supported.")
+        else:
+            print(":man_facepalming: No provider configured.")
+    else:
+        print(":white_sun_with_small_cloud: The cloud plan is coming soon. Pleae visit the website for more information.")
