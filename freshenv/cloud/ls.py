@@ -34,8 +34,8 @@ def list_environments(plan: str) -> None:
             if provider == "aws":
                 list_environments_from_aws(config_obj)
             else:
-                print(f":man_facepalming: {provider} provider not supported.")
+                print(f":building_construction: {provider} provider not supported.")
         else:
-            print(":man_facepalming: No provider configured.")
+            print(":person_facepalming: No provider configured.")
     else:
-        print(":white_sun_with_small_cloud: The cloud plan is coming soon. Pleae visit the website for more information.")
+        print(":white_sun_with_small_cloud:  The cloud plan is coming soon. Please visit the website for more information.")
