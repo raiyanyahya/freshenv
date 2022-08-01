@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 from os import path
+from typing import Dict
 from rich import pretty, print
 from freshenv.build import config_exists, create_file, key_exists, get_key_values_from_config
 
@@ -14,10 +15,10 @@ def check_run(config_type: str) -> bool:
         create_file(freshenv_config_location)
         return False
     if not key_exists(config_type):
-        print(f":exclamation_mark: cloud configuration does not exist.")
+        print(f":exclamation_mark: A [bold]{config_type}[/bold] cloud has not been configured.")
         return False
     if not mandatory_keys_exists(config_type):
-        print(":exclamation_mark: missing mandatory keys in configuration for cloud.")
+        print(f":exclamation_mark: missing mandatory keys in {config_type} configuration for cloud.")
         return False
     return True
 
@@ -38,9 +39,9 @@ def mandatory_keys_exists(config_type: str) -> bool:
     return True
 
 
-def get_config(config_type: str) -> dict[str, str]:
+def get_config(config_type: str) -> Dict[str, str]:
     if not check_run(config_type):
-        return
+        return {}
     cloud_config = dict(get_key_values_from_config(config_type))
     return cloud_config
 

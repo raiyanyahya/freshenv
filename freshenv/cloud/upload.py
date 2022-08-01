@@ -2,5 +2,5 @@
 
 
 def upload_environment(environment_name:str) -> None:
-    """Upload environment to the cloud."""
-    pass
+    """Upload a custom environment to the cloud."""
+    print(environment_name)

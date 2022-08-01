@@ -10,9 +10,10 @@ def cloud() -> None:
     """Freshenv cloud utilities."""
 
 @cloud.command("ls")
-def ls() -> None:
+@click.argument("plan",type=click.Choice(["freshenv", "personal"]))
+def ls(plan: str) -> None:
     """List cloud environments."""
-    list_environments()
+    list_environments(plan)
 
 @cloud.command("upload")
 @click.argument("environment_name")

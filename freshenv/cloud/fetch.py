@@ -2,5 +2,5 @@
 
 
 def fetch_environment(environment_name: str) -> None:
-    """Download an environment from the cloud."""
-    pass
+    """Fetch a custom environment from the cloud."""
+    print(environment_name)
