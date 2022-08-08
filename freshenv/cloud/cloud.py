@@ -7,7 +7,8 @@ from freshenv.cloud.upload import upload_environment
 
 @click.group(name="cloud")
 def cloud() -> None:
-    """Freshenv cloud utilities."""
+    """Save and share your custom environments on the cloud."""
+
 
 @cloud.command("ls")
 @click.argument("plan",type=click.Choice(["freshenv", "personal"]))

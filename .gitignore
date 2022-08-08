@@ -53,7 +53,7 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
-
+*.tar
 # Translations
 *.mo
 *.pot
