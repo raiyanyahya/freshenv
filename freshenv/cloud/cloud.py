@@ -1,4 +1,3 @@
-from textwrap import shorten
 import click
 from freshenv.cloud.config import view_config
 from freshenv.cloud.fetch import fetch_environment
