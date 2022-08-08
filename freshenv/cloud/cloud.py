@@ -18,9 +18,10 @@ def ls(plan: str) -> None:
 
 @cloud.command("upload")
 @click.argument("environment_name")
-def upload(environment_name: str) -> None:
+@click.argument("plan",type=click.Choice(["freshenv", "personal"]))
+def upload(environment_name: str, plan: str) -> None:
     """Upload an environment to the cloud."""
-    upload_environment(environment_name)
+    upload_environment(environment_name, plan)
 
 @cloud.command("fetch")
 @click.argument("environment_name")
