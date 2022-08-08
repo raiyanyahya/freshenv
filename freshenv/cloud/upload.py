@@ -1,6 +1,7 @@
 from docker import APIClient, errors
 from rich import print
 import boto3
+from os import remove
 from botocore import exceptions
 from freshenv.cloud.config import get_config
 
@@ -23,6 +24,10 @@ def export_environment(environment_name: str) -> None:
         print(f"Unknown exception: {e}")
 
 
+def remove_tar_file(file_name: str) -> None:
+    remove(file_name)
+
+
 def upload_environment_to_aws(environment_name: str, config_obj: dict) -> None:
     try:
         session = boto3.session.Session(profile_name=config_obj["aws_profile"])
@@ -32,11 +37,12 @@ def upload_environment_to_aws(environment_name: str, config_obj: dict) -> None:
         file_name = export_environment(environment_name)
         s3_client.upload_file(file_name, config_obj["bucket"], file_name)
         print(":white_check_mark: Environment uploaded successfully.")
+        remove_tar_file(file_name)
     except exceptions.ClientError as client_error:
         if client_error.response['Error']['Code'] == 'NoSuchBucket':
-            print(":person_shrugging_medium_skin_tone: Bucket does not exist.")
+            print(":person_shrugging: Bucket does not exist.")
     except exceptions.ProfileNotFound:
-        print(":person_shrugging_medium_skin_tone: Profile does not exist.")
+        print(":person_shrugging: config profile does not exist.")
 
 
 def upload_environment(environment_name: str, plan: str) -> None:
@@ -49,7 +55,7 @@ def upload_environment(environment_name: str, plan: str) -> None:
                 upload_environment_to_aws(environment_name, config_obj)
             else:
                 print(
-                    f":building_construction: {provider} provider not supported.")
+                    f":building_construction:  {provider} provider not supported.")
         else:
             print(":person_facepalming: No provider configured.")
     else:

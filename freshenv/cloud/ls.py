@@ -21,9 +21,9 @@ def list_environments_from_aws(config_obj: dict) -> None:
         print(tree)
     except exceptions.ClientError as client_error:
         if client_error.response['Error']['Code'] == 'NoSuchBucket':
-            print(":person_shrugging_medium_skin_tone: Bucket does not exist.")
+            print(":person_shrugging: Bucket does not exist.")
     except exceptions.ProfileNotFound:
-        print(":person_shrugging_medium_skin_tone: Profile does not exist.")
+        print(":person_shrugging: config profile does not exist.")
 
 def list_environments(plan: str) -> None:
     """List your custom cloud environments."""

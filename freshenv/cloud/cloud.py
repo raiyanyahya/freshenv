@@ -1,3 +1,4 @@
+from textwrap import shorten
 import click
 from freshenv.cloud.config import view_config
 from freshenv.cloud.fetch import fetch_environment
@@ -11,14 +12,14 @@ def cloud() -> None:
 
 
 @cloud.command("ls")
-@click.argument("plan",type=click.Choice(["freshenv", "personal"]))
+@click.argument("plan", default="personal", type=click.Choice(["freshenv", "personal"]), metavar="plan")
 def ls(plan: str) -> None:
     """List cloud environments."""
     list_environments(plan)
 
-@cloud.command("upload")
+@cloud.command("up")
 @click.argument("environment_name")
-@click.argument("plan",type=click.Choice(["freshenv", "personal"]))
+@click.argument("plan", default="personal",type=click.Choice(["freshenv", "personal"]),  metavar="plan")
 def upload(environment_name: str, plan: str) -> None:
     """Upload an environment to the cloud."""
     upload_environment(environment_name, plan)
@@ -30,7 +31,7 @@ def fetch(environment_name: str) -> None:
     fetch_environment(environment_name)
 
 @cloud.command("config")
-@click.argument("plan",type=click.Choice(["freshenv", "personal"]))
+@click.argument("plan", default="personal", type=click.Choice(["freshenv", "personal"]),  metavar="plan")
 def config(plan: str) -> None:
     """View personal and freshenv cloud configurations."""
     view_config("cloud."+plan)
