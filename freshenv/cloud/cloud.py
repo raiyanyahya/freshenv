@@ -25,9 +25,10 @@ def push(environment_name: str, plan: str) -> None:
 
 @cloud.command("fetch")
 @click.argument("environment_name")
-def fetch(environment_name: str) -> None:
+@click.argument("plan", default="personal",type=click.Choice(["freshenv", "personal"]),  metavar="plan")
+def fetch(environment_name: str, plan: str) -> None:
     """Download an environment from the cloud."""
-    fetch_environment(environment_name)
+    fetch_environment(environment_name, plan)
 
 @cloud.command("config")
 @click.argument("plan", default="personal", type=click.Choice(["freshenv", "personal"]),  metavar="plan")

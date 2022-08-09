@@ -49,6 +49,8 @@ def push_environment(environment_name: str, plan: str) -> None:
     """Upload a custom environment to the cloud."""
     if plan == "personal":
         config_obj = get_config(f"cloud.{plan}")
+        if not config_obj:
+            return
         if config_obj and config_obj["provider"]:
             provider = config_obj["provider"]
             if provider == "aws":
@@ -59,4 +61,4 @@ def push_environment(environment_name: str, plan: str) -> None:
         else:
             print(":person_facepalming: No provider configured.")
     else:
-        print(":white_sun_with_small_cloud:  The cloud plan is coming soon. Please visit the website for more information.")
+        print(":white_sun_with_small_cloud:  The freshenv cloud plan is coming soon. Please visit the website for more information.")

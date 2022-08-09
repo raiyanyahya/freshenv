@@ -35,3 +35,4 @@ jobs:
                echo "install=apt update -y && apt upgrade -y && apt install snapd -y" >> ~/.freshenv/freshenv
                echo "cmd=bash" >> ~/.freshenv/freshenv
                fr build testenv
+               fr cloud config

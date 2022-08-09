@@ -51,4 +51,6 @@ def get_config(config_type: str) -> Dict[str, str]:
 def view_config(config_type: str) -> None:
     """View personal and freshenv cloud configurations."""
     cloud_config = get_config(config_type)
+    if cloud_config == {}:
+        return
     pretty.pprint(cloud_config)
