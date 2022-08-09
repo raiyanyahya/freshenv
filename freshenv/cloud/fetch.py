@@ -23,7 +23,7 @@ def fetch_environment_from_aws(environment_name: str, config_obj: dict) -> None:
     except Exception as e:
         print(f"Unknown exception: {e}")
 
-    
+
 def import_container(environment_name: str) -> None:
     try:
         client = APIClient(base_url="unix://var/run/docker.sock")
