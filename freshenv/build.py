@@ -27,13 +27,13 @@ def config_exists() -> bool:
     return True
 
 
-def get_key_values_from_config(flavour: str) -> SectionProxy:
+def get_key_values_from_config(key: str) -> SectionProxy:
     config = ConfigParser()
     config.read(freshenv_config_location)
-    return config[flavour]
+    return config[key]
 
 
-def env_exists(flavour: str) -> bool:
+def key_exists(flavour: str) -> bool:
     config = ConfigParser()
     config.read(freshenv_config_location)
     if flavour not in config.sections():
@@ -63,7 +63,7 @@ def run_checks(flavour: str) -> bool:
         print(f":card_index: No config file found. Creating an empty config at {freshenv_config_location}.")
         create_file(freshenv_config_location)
         return False
-    if not env_exists(flavour):
+    if not key_exists(flavour):
         print(f":exclamation_mark:configuration for custom flavour {flavour} does not exist.")
         return False
     if not mandatory_keys_exists(flavour):

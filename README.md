@@ -4,7 +4,7 @@
 
 
 # Freshenv 🥗
-```freshenv``` is a  command line application to provision and manage local developer environments. Build and develop your projects in completely isolated environments. Save, switch and restart your environments. Choose from a wide variety of flavours to get the developer tools you need.\
+```freshenv``` is a  command line application to provision and manage local developer environments. Build and develop your projects in completely isolated environments. Save, switch and restart your environments. Push and fetch developer environments from the cloud.  Choose from a wide variety of flavours to get the developer tools you need.\
 \
 <kbd>
 [![download-17adc07640182f121.gif](https://s10.gifyu.com/images/download-17adc07640182f121.gif)](https://gifyu.com/image/Sbsim)
@@ -35,7 +35,17 @@ install=apt update -y && apt upgrade -y && apt install arandr
 cmd=bash
 ```
 
-This feature is part of the 1.1.0 release and is not available in older versions.
+## Cloud Environments
+
+Freshenv cloud introduces cloud capabilities to the developer environments. It lets developers ```push``` and ```fetch``` custom environments to the cloud. It currently supports personal clouds and a freshenv hosting plan is being worked on. To use the cloud features of freshenv you have to configure freshenv with the cloud provider and the bucket name. A sample of the config is present below. It currently supports aws s3 as a provider and more providers are being worked on. Please run ```fr cloud --help``` for more information.
+
+```yml
+[cloud.personal]
+provider=aws
+bucket=myenvironments
+aws_profile=default
+```
+
 
 ## Installation Linux
 
@@ -58,9 +68,7 @@ I would recommend using pipx instead of pip to install cli applications on you m
 
 ## Installation MacOS
 
-I am trying to get freshenv on homebrew-core but I need more stars on the repository for 
-them to accept my pull request. The self hosted tap is available
-on the repo raiyanyahya/homebrew-freshenv. Install the freshenv python package from a self hosted homebrew tap.
+I am trying to get freshenv on homebrew-core but I need more stars on the repository for them to accept my pull request. The self hosted tap is available on the repo raiyanyahya/homebrew-freshenv. Install the freshenv python package from a self hosted homebrew tap.
 
 ```console
   brew tap raiyanyahya/freshenv
@@ -82,11 +90,12 @@ Commands:
   build      Build a custom freshenv flavour.
   check      Check system compatibility for running freshenv.
   clean      Remove all freshenv flavours and environments.
+  cloud      Save and share your custom environments on the cloud.
   flavours   Show all available flavours for provisioning.
   provision  Provision a developer environment.
   remove     Remove a freshenv environment.
   start      Resume working in an environment.
-  view       View local freshenv managed environments.
+  view       View local freshenv managed environments
 ```
 
 ### Commands and Options
@@ -178,6 +187,22 @@ Usage: fr build [OPTIONS] FLAVOUR
 Options:
   -l, --logs  Show build logs.
   --help      Show this message and exit
+```
+
+**```cloud```**
+```console
+Usage: fr cloud [OPTIONS] COMMAND [ARGS]...
+
+  Save and share your custom environments on the cloud.
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  config  View personal and freshenv cloud configurations.
+  fetch   Download an environment from the cloud.
+  ls      List cloud environments.
+  push    Upload an environment to the cloud.
 ```
 
 ## License

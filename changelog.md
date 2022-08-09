@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] August 09, 2022
+- Released the open source cloud features for freshenv. Developers can now push and fetch environments from personal aws s3 accounts.
+  
 ## [2.0.0] July 12, 2022
 - Moving to a different license. All cloud features will also be published under this new license.
 
