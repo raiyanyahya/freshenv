@@ -22,6 +22,7 @@ def export_environment(environment_name: str) -> None:
         print(":cross_mark_button: Docker not installed or running. ")
     except Exception as e:
         print(f"Unknown exception: {e}")
+    return ""
 
 
 def remove_tar_file(file_name: str) -> None:
