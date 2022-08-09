@@ -36,7 +36,7 @@ def push_environment_to_aws(environment_name: str, config_obj: dict) -> None:
         s3_client.head_bucket(Bucket=config_obj["bucket"])
         print(":link: Uploading environment to the cloud.")
         file_name = export_environment(environment_name)
-        if file_name = "":
+        if file_name == "":
             return
         s3_client.upload_file(file_name, config_obj["bucket"], file_name)
         print(":white_check_mark: Environment uploaded successfully.")
