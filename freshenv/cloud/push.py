@@ -28,7 +28,7 @@ def remove_tar_file(file_name: str) -> None:
     remove(file_name)
 
 
-def upload_environment_to_aws(environment_name: str, config_obj: dict) -> None:
+def push_environment_to_aws(environment_name: str, config_obj: dict) -> None:
     try:
         session = boto3.session.Session(profile_name=config_obj["aws_profile"])
         s3_client = session.client('s3')
@@ -45,14 +45,14 @@ def upload_environment_to_aws(environment_name: str, config_obj: dict) -> None:
         print(":person_shrugging: config profile does not exist.")
 
 
-def upload_environment(environment_name: str, plan: str) -> None:
+def push_environment(environment_name: str, plan: str) -> None:
     """Upload a custom environment to the cloud."""
     if plan == "personal":
         config_obj = get_config(f"cloud.{plan}")
         if config_obj and config_obj["provider"]:
             provider = config_obj["provider"]
             if provider == "aws":
-                upload_environment_to_aws(environment_name, config_obj)
+                push_environment_to_aws(environment_name, config_obj)
             else:
                 print(
                     f":building_construction:  {provider} provider not supported.")

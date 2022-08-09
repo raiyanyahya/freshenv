@@ -2,7 +2,7 @@ import click
 from freshenv.cloud.config import view_config
 from freshenv.cloud.fetch import fetch_environment
 from freshenv.cloud.ls import list_environments
-from freshenv.cloud.upload import upload_environment
+from freshenv.cloud.push import push_environment
 
 
 @click.group(name="cloud")
@@ -16,12 +16,12 @@ def ls(plan: str) -> None:
     """List cloud environments."""
     list_environments(plan)
 
-@cloud.command("up")
+@cloud.command("push")
 @click.argument("environment_name")
 @click.argument("plan", default="personal",type=click.Choice(["freshenv", "personal"]),  metavar="plan")
-def upload(environment_name: str, plan: str) -> None:
+def push(environment_name: str, plan: str) -> None:
     """Upload an environment to the cloud."""
-    upload_environment(environment_name, plan)
+    push_environment(environment_name, plan)
 
 @cloud.command("fetch")
 @click.argument("environment_name")
