@@ -6,7 +6,7 @@ from botocore import exceptions
 from freshenv.cloud.config import get_config
 
 
-def export_environment(environment_name: str) -> None:
+def export_environment(environment_name: str) -> str:
     try:
         client = APIClient(base_url="unix://var/run/docker.sock")
         exported_container = client.export(container=environment_name)
@@ -36,6 +36,8 @@ def push_environment_to_aws(environment_name: str, config_obj: dict) -> None:
         s3_client.head_bucket(Bucket=config_obj["bucket"])
         print(":link: Uploading environment to the cloud.")
         file_name = export_environment(environment_name)
+        if file_name = "":
+            return
         s3_client.upload_file(file_name, config_obj["bucket"], file_name)
         print(":white_check_mark: Environment uploaded successfully.")
         remove_tar_file(file_name)
