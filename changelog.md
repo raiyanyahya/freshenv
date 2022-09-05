@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 
-## [3.0.1] September 06. 2022
+## [3.0.1] September 06, 2022
 - Bumping dependecies and adding timsout to the request get function in provision.pt
 
 ## [3.0.0] August 09, 2022
