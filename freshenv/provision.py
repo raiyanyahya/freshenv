@@ -49,7 +49,7 @@ def pull_and_try_again(flavour: str, command: str, ports: List[str], name: str, 
         print(":x: flavour doesnt exist")
 
 def get_dockerfile_path(flavour: str) -> bytes:
-    req = get(f"https://raw.githubusercontent.com/raiyanyahya/freshenv-flavours/master/{flavour}")
+    req = get(f"https://raw.githubusercontent.com/raiyanyahya/freshenv-flavours/master/{flavour}", timeout=60)
     return req.text.encode('utf-8')
 
 def build_environment(flavour: str, command: str, ports: List[str], name: str, client: APIClient):
