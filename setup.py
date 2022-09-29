@@ -41,6 +41,6 @@ setup(
     author_email="raiyanyahyadeveloper@gmail.com",
     keywords=["cli","developer tools","productivity", "tools"],
     packages=find_packages(),
-    install_requires=["click==8.1.3", "docker==6.0.0", "rich==12.5.1", "dockerpty==0.4.1", "configparser==5.3.0", "Jinja2==3.1.2", "boto3==1.24.82"],
+    install_requires=["click==8.1.3", "docker==6.0.0", "rich==12.5.1", "dockerpty==0.4.1", "configparser==5.3.0", "Jinja2==3.1.2", "boto3==1.24.83"],
     entry_points={"console_scripts": ["freshenv=freshenv.cli:cli","fr=freshenv.cli:cli"]},
 )
