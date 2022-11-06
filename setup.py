@@ -37,7 +37,7 @@ setup(
     long_description_content_type='text/markdown',
     url="https://github.com/raiyanyahya/freshenv",
     author="Raiyan Yahya",
-    license="GPLv3 and a commercial license",
+    license="Mozilla Public License 2.0",
     author_email="raiyanyahyadeveloper@gmail.com",
     keywords=["cli","developer tools","productivity", "tools"],
     packages=find_packages(),
