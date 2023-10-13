@@ -15,7 +15,7 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v2
         with:
-            python-version: 3.6
+            python-version: 3.8
 
       - name: build
         run: python3 setup.py install
@@ -27,7 +27,7 @@ jobs:
         - name: setup python
           uses: actions/setup-python@v2
           with:
-            python-version: 3.6
+            python-version: 3.8
         - name: test
           run: |
             pip3 install tox
