@@ -2,8 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 
+## [3.0.4] October 13, 2023
+- Bumping dependecies 
+
 ## [3.0.1] September 06, 2022
-- Bumping dependecies and adding timsout to the request get function in provision.pt
+- Bumping dependecies and adding timeout to the request get function in provision.py
 
 ## [3.0.0] August 09, 2022
 - Released the open source cloud features for freshenv. Developers can now push and fetch environments from personal aws s3 accounts.
